@@ -4,7 +4,6 @@
 
 .box {
     width: 90%;
-    border: 25px solid yellow;
-    padding: 10%;
-    margin: 10%;
+    border: 10px;
+    padding: 5%;
 }
