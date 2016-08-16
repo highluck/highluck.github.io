@@ -1,3 +1,10 @@
 .footer {
   margin: 10%  
 }
+
+.box {
+    width: 90%;
+    border: 25px solid yellow;
+    padding: 10%;
+    margin: 10%;
+}
