@@ -1,5 +1,15 @@
 .footer {
    padding:5%;
+   width: 360px;
+   margin: 20px auto;
+    font-weight: 100;
+    font-size:15pt;
+    z-index:+2;
+    word-spacing: 3px;
+    letter-spacing:0.8px;
+    line-height:1.3em;
+    font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+    
 }
 
 .box {
@@ -8,3 +18,4 @@
     padding: 5%;
     text-decoration-color: darkslategray
 }
+
