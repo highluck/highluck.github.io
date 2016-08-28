@@ -5,13 +5,34 @@
     font-weight: 100;
     font-size:15pt;
     z-index:+2;
+    color: #444;
     word-spacing: 3px;
     letter-spacing:0.8px;
     line-height:1.8em;
-    font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
-    
+    font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;   
 }
 
+.detail{
+    margin-top: 200px;
+}
+.title{ 
+    position: absolute;
+    height:150px;
+    width:110%;
+    padding: 10%;
+    padding-left: 22%;
+    margin-left: -120px;
+    margin-top: -40px;
+    color: oldlace;
+    font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
+}
+
+.page-header{    
+    height:100%;
+    width:100%;
+    color: #333;
+    font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+}
 .box {
     width: 90%;
     border: 5px;
