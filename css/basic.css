@@ -27,6 +27,11 @@
     font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
 }
 
+@media screen and (max-width:768px){
+.title{ 
+    margin-top: -20px;
+}
+}
 .page-header{    
     height:100%;
     width:100%;
