@@ -27,14 +27,36 @@
     font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
 }
 
-@media screen and (max-width:896px){
+@media screen and (max-width:1024px){
 .title{ 
-    margin-top: -20px;
+    height:130px;
+    margin-top: -10px;
     padding: 10%;
     width:80%;
     padding-left: 40%;
 }
 }
+    .retitle{ 
+
+        height:150px;
+        width:77%;
+        padding: 10%;
+        padding-left: 20%;
+        margin-left: -120px;
+        margin-top: -40px;
+        color: oldlace;
+        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
+    }
+
+    @media screen and (max-width:1024px){
+    .retitle{ 
+        height:130px;
+        margin-top: -15px;
+        padding: 10%;
+        width:80%;
+        padding-left: 40%;
+    }
+    }
 .page-header{    
     height:100%;
     width:100%;
