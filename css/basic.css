@@ -9,7 +9,7 @@
     word-spacing: 3px;
     letter-spacing:0.8px;
     line-height:1.8em;
-    font-family: "돋움", dotum, "굴림";   
+    font-family: "돋움", "굴림";   
 }
 
 .detail{
@@ -30,6 +30,7 @@
 @media screen and (max-width:768px){
 .title{ 
     margin-top: -20px;
+    padding: 10%;
 }
 }
 .page-header{    
