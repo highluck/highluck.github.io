@@ -5,9 +5,10 @@
 angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: GenericViewCtrl});
+    $routeProvider.when('/startup', {templateUrl: 'partials/startUpPage.html', controller: GenericViewCtrl});
     $routeProvider.when('/project_a', {templateUrl: 'partials/project_a.html', controller: GenericViewCtrl});
     $routeProvider.when('/project_b', {templateUrl: 'partials/project_b.html', controller: GenericViewCtrl});
-    $routeProvider.when('/project_c', {templateUrl: 'partials/project_b.html',controller: GenericViewCtrl});
+    $routeProvider.when('/project_c', {templateUrl: 'partials/project_c.html',controller: GenericViewCtrl});
     $routeProvider.when('/contact', {templateUrl: 'partials/contact.html', controller: ContactViewCtrl});
     $routeProvider.when('/imprint', {templateUrl: 'partials/imprint.html', controller: GenericViewCtrl});
     $routeProvider.otherwise({redirectTo: '/home'});

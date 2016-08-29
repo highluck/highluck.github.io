@@ -18,9 +18,9 @@
 .title{ 
     position: absolute;
     height:150px;
-    width:110%;
+    width:75%;
     padding: 10%;
-    padding-left: 22%;
+    padding-left: 20%;
     margin-left: -120px;
     margin-top: -40px;
     color: oldlace;
@@ -31,6 +31,7 @@
 .title{ 
     margin-top: -20px;
     padding: 10%;
+    width:75%;
     padding-left: 40%;
 }
 }
