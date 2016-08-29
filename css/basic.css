@@ -18,7 +18,7 @@
 .title{ 
     position: absolute;
     height:150px;
-    width:75%;
+    width:77%;
     padding: 10%;
     padding-left: 20%;
     margin-left: -120px;
@@ -27,11 +27,11 @@
     font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
 }
 
-@media screen and (max-width:1024px){
+@media screen and (max-width:896px){
 .title{ 
     margin-top: -20px;
     padding: 10%;
-    width:75%;
+    width:77%;
     padding-left: 40%;
 }
 }
