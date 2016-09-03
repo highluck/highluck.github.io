@@ -1,0 +1,36 @@
+
+@media screen and (max-width:768px){
+    .md-headline{
+        font-size: 12px;
+    }
+    .date{
+        font-size: 11px;
+    }
+    .content{
+        font-size: 15px;
+    }
+}
+@media screen and (max-width:768px){
+    .md-subhead{
+        font-size: 11px;
+    }
+}
+
+
+
+@media (min-width:768px) and (max-width: 1024px){
+    .md-headline{
+        font-size: 18px;
+    }
+    .date{
+        font-size: 16px;
+    }
+     .content{
+        font-size: 20px;
+    }
+}
+@media (min-width:768px) and (max-width: 1024px){
+    .md-subhead{
+        font-size: 16px;
+    }
+}

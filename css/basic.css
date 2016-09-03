@@ -18,7 +18,7 @@
 .title{ 
     position: absolute;
     height:150px;
-    width:77%;
+    width:90%;
     padding: 10%;
     padding-left: 20%;
     margin-left: -200px;
@@ -31,37 +31,37 @@
 .title{ 
     position: absolute;
     height:150px;
-    width:77%;
+    width:80%;
     padding: 10%;
-    padding-left: 20%;
-    margin-left: -140px;
-    margin-top: -40px;
+    padding-left: 30%;
+    margin-left: -150px;
+    margin-top: -10px;
     color: oldlace;
     font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
     }
 }
-@media (min-width: 1024px){
+@media (min-width: 1024px) and (max-width: 1280px){
     .title{ 
         position: absolute;
         height:150px;
-        width:77%;
+        width:90%;
         padding: 10%;
         padding-left: 20%;
-        margin-left: -150px;
-        margin-top: 0px;
+        margin-left: -15%;
+        margin-top: 20px;
         color: oldlace;
         font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
     }
 }
-@media (max-width:768px) and (min-width: 1024px){
+@media (min-width:768px) and (max-width: 1024px){
     .title{ 
         position: absolute;
         height:150px;
-        width:77%;
+        width:80%;
         padding: 10%;
         padding-left: 20%;
-        margin-left: -120px;
-        margin-top: -90px;
+        margin-left: -15%;
+        margin-top: -56px;
         color: oldlace;
         font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
     }
@@ -72,8 +72,9 @@
         height:130px;
         margin-top: -10px;
         padding: 10%;
-        width:80%;
+        width:60%;
         padding-left: 40%;
+        margin-left: -10%;
     }
 }
     .retitle{ 
@@ -112,14 +113,14 @@
             font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
         }
     }
-    @media (max-width:768px) and (min-width: 1024px){
+    @media (min-width:768px) and (max-width: 1024px){
         .retitle{ 
             height:180px;
             width:77%;
             padding: 10%;
             padding-left: 20%;
             margin-left: -120px;
-            margin-top: -90px;
+            margin-top: 5%;
             color: oldlace;
             font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
         }
