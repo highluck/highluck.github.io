@@ -41,7 +41,8 @@
 
 @media screen and (max-width:768px){
     .title-img{ 
-        margin-left: -5%;
+        width:92%;
+        margin-left: -6%;
         margin-top: -20px;
         color: oldlace;
     }
