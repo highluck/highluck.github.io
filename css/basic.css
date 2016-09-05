@@ -15,126 +15,64 @@
 .detail{
     margin-top: 200px;
 }
-.title{ 
-    position: absolute;
-    height:150px;
-    width:90%;
-    padding: 10%;
-    padding-left: 20%;
-    margin-left: -200px;
-    margin-top: -40px;
-    color: oldlace;
-    font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
-    }
 
-@media (min-width: 1280px){
-.title{ 
-    position: absolute;
-    height:150px;
-    width:80%;
+.title-img {
+
+    height: 10%;
+    width:100%;
     padding: 10%;
-    padding-left: 30%;
-    margin-left: -150px;
-    margin-top: -10px;
     color: oldlace;
-    font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
-    }
-}
-@media (min-width: 1024px) and (max-width: 1280px){
-    .title{ 
-        position: absolute;
-        height:150px;
-        width:90%;
-        padding: 10%;
-        padding-left: 20%;
-        margin-left: -15%;
-        margin-top: 20px;
-        color: oldlace;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
-    }
+    
 }
 @media (min-width:768px) and (max-width: 1024px){
-    .title{ 
-        position: absolute;
-        height:150px;
-        width:80%;
-        padding: 10%;
-        padding-left: 20%;
-        margin-left: -15%;
-        margin-top: -56px;
+    .title-img{ 
+      
+        margin-left: -5%;
+        margin-top: -20px;
         color: oldlace;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
+         
+    }
+    .content-board{
+        position: relative;
+        margin-left : 6%;
+        margin-right: 6%;
     }
 }
 
 @media screen and (max-width:768px){
-    .title{ 
-        height:130px;
-        margin-top: -10px;
-        padding: 10%;
-        width:60%;
-        padding-left: 40%;
-        margin-left: -10%;
+    .title-img{ 
+        margin-left: -5%;
+        margin-top: -20px;
+        color: oldlace;
     }
 }
-    .retitle{ 
-        height:150px;
-        width:77%;
-        padding: 10%;
-        padding-left: 20%;
-        margin-left: -200px;
-        margin-top: -40px;
-        color: oldlace;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
-    }
 
-    @media (min-width: 1280px){
-    .retitle{ 
-        
-        height:200px;
-        width:77%;
-        padding: 10%;
-        padding-left: 20%;
-        margin-left: -140px;
-        margin-top: -40px;
-        color: oldlace;
-        font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
-        }
+@media (min-width: 1280px){
+    .contents{
+        position: relative;
+        margin-left : 15%;
+        margin-right: 15%;
     }
-    @media (min-width: 1024px){
-        .retitle{ 
-            height:200px;
-            width:77%;
-            padding: 10%;
-            padding-left: 20%;
-            margin-left: -150px;
-            margin-top: 0px;
-            color: oldlace;
-            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
-        }
+    .content-board{
+         position: relative;
+        margin-left : 10%;
+        margin-right: 10%;
     }
-    @media (min-width:768px) and (max-width: 1024px){
-        .retitle{ 
-            height:180px;
-            width:77%;
-            padding: 10%;
-            padding-left: 20%;
-            margin-left: -120px;
-            margin-top: 5%;
-            color: oldlace;
-            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;  
-        }
-    }
+}
 
-    @media screen and (max-width:768px){
-        .retitle{ 
-            height:130px;
-            margin-top: -10px;
-            padding: 8%;
-            width:80%;
-            padding-left: 30%;
-        }
+@media (min-width: 1024px) and (max-width: 1280px){
+     .contents{
+         position: relative;
+        margin-left : 15%;
+        margin-right: 15%;
     }
+     .content-board{
+        position: relative;
+        margin-left : 8%;
+        margin-right: 8%;
+    }
+}
+
 
 .page-header{    
     height:100%;
