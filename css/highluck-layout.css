@@ -24,9 +24,13 @@
     color: oldlace;
     
 }
+@media (min-width: 1280px){
+    .title-img{           
+        color: #555;
+         
+    }
 @media (min-width:768px) and (max-width: 1024px){
-    .title-img{ 
-      
+    .title-img{      
         margin-left: -5%;
         margin-top: -20px;
         color: oldlace;
