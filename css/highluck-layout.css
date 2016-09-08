@@ -77,6 +77,19 @@
         margin-right: 8%;
     }
 }
+    
+@media (min-width:768px) and (max-width: 1024px){
+     .contents{
+         position: relative;
+        margin-left : 13%;
+        margin-right: 13%;
+    }
+     .content-board{
+        position: relative;
+        margin-left : 6%;
+        margin-right: 6%;
+    }
+}
 
 
 .page-header{    
