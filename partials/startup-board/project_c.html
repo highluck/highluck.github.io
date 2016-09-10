@@ -39,53 +39,53 @@
     <p>&nbsp;스칼라는 interface라는 개념 대신 trait이 있는데 이것은 자바의 interface가 뼈대만 제공할 수 있는 것과 다르게 구현을 할 수 있다 그리고 물론 interface를 대신하는 개념이기 때문에 여러개의 trait을 간단히 with를 선언하는 것으로 믹스할 수 있다. 그리고 trait은 latebinding하기 때문에 다중상속에서 메서드 충돌 문제가 없다.다음은 예시 코드 이다.</p><br>
     <h4>Scala</h4>
     <div class="highlighter-rouge"><pre class="highlight"><code>
-    trait Me {
-      def name: String = { "이상운" }
-    }
-    trait You {
-      def youName: String = { "김상순" }
-    }
-    class Mix extends Me with YOU{
-      def mixName : String = { name + youName}
-    }
+trait Me {
+  def name: String = { "이상운" }
+}
+trait You {
+  def youName: String = { "김상순" }
+}
+class Mix extends Me with YOU{
+  def mixName : String = { name + youName}
+}
     </code></pre>
     </div>  <br>
     <p>그리고 이걸 자바로 개발하면 다음과 같다.</p><br>
     
     <h4>Java</h4>
     <div class="highlighter-rouge"><pre class="highlight"><code>
-    public InterFace Me{
-        String name();
-    }      
-    public InterFace You{
-        String youName();
-    } 
-    Class Mix Implements Me, You{
-        String name(){
-            return "이상운";
-        }
-        String youName(){
-            return "김상순";
-        }
-        String Mix(){
-            return name + youName; 
-        }
+public InterFace Me{
+    String name();
+}      
+public InterFace You{
+    String youName();
+} 
+Class Mix Implements Me, You{
+    String name(){
+        return "이상운";
     }
+    String youName(){
+        return "김상순";
+    }
+    String Mix(){
+        return name + youName; 
+    }
+}
         
     </code></pre>
     </div>  <br>
      <p> 이러한 차이가 있다. 따로 구현을 또하지 않아도 되기 때문에 interface보다 편하다는 느낌을 받을 수 있다. 그리고 자바의 interface와는 아마 다른 방향으로 이용되지 않을까 싶다.</p>
     <p> 그리고 인스턴스를 생성할 때도 선택적으로 Mixed in 할 수 있다. 
     </p>
-    <div class="highlighter-rouge"><pre class="highlight"><code>
-    class Mix {
-        val mixName = new Name with Me
-    }
+    <div class="highlighter-rouge"><pre><code>
+class Mix {
+    val mixName = new Name with Me
+}
     </code></pre>
     </div>  <br>
     <p>여기 까지 trait을 보면 자유도가 높은 언어인 느낌 이 강하다.</p>
         
-    <h3>근데 여기서 잠깐 그러면 그냥 클래스를 상속받는 것과 무슨 차이지? 라는 생각을 할 수가 있다.</h3>
+    <h4>근데 여기서 잠깐 그러면 그냥 클래스를 상속받는 것과 무슨 차이지? </h4>
     <p>trait도 만능은 아니다 클래스와 다른 점은 다음과 같다.</p><br>
     <h4>1. 생성자 파라미터를 받을 수 없다.</h4>
     <h4>2. 초기화 되지않은 값들을 위해 Mixed in을 구현해야한다. </h4>  
