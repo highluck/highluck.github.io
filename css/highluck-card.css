@@ -6,10 +6,11 @@
     .date{
         font-size: 11px;
     }
-    .content{
-        font-size: 15px;
+    .footer-font{
+        font-size: 14px;
     }
 }
+
 @media screen and (max-width:768px){
     .md-subhead{
         font-size: 11px;
@@ -25,10 +26,11 @@
     .date{
         font-size: 16px;
     }
-     .content{
-        font-size: 20px;
+    .footer-font{
+        font-size: 18px;
     }
 }
+
 @media (min-width:768px) and (max-width: 1024px){
     .md-subhead{
         font-size: 16px;

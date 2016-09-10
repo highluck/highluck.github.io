@@ -7,17 +7,17 @@
     <p align = "right" style=" padding-right: 5%;"><span span style="font-style:italic">Write by</span> highluck</p>
 </div>
 
-    <div class = "footer content" style="width:90%">
+    <div class = "footer footer-font" style="width:90%">
         <p>&nbsp;사실 회사의 전체적인 아키텍처가 단순했다. 내가 입사한 직전 전체적인 구성도는 다음과 같다.</p>
         <img src="img/arc_pre.png" width="600" height="350">
         <br>
-        <h3>- 새로운 아키텍처! -</h3>
+        <h3>- 새로운 설계 -</h3>
         <p>&nbsp;팀장님과 새로운 아키텍처에 대한 이야기를 많이 나누었다. 기존에 홈페이지는 html중간중간에 PHP코드가 있었고 인증같은 과정이 없었다. 그리고 이렇게 front와 server가 붙어있으면 나중에 서비스가 커지면 개발하기 어렵겠다는 생각이들었다. (나는 개발에 있어서 서로 협업을 위한 코드는 상당히 중요하다고 생각한다.) 또한 팀장님께서 은행과 송수신하는 서버를 쉽게 모니터링하는 서비스개발도 필요하다고 얘기하셨다. 나도 공감하는 이야기다 왜냐면 회사의 직접적인 매출과 연관이 되어있기 때문에 서버가 죽었는지 살았는지 쉽게 모니터링을 할 필요가 있었기 때문이다. 조금 더 자세한 건 개발하는 포스팅을 올릴 때 다시한번 올리겠다.</p>
         <p> 그래서 생각해낸 새로운 아키텍쳐!</p>
         <img src="img/arc_aft.png" width="600" height="350">
         <br>
         
-        <p>설계를 하면서 중요하게 생각한 것은 다음과 같다. </p>
+        <p>설계를 하면서 중요하게 생각한 것은 다음과 같다. </p><br>
         <p>1. 서비스 모듈 별로 WebAPI화를 하여 서비스 별로 편하게 가져다 쓰게 하기(나중에 Mobile등 다른 Servie를 개발한다고 들었다.)</p>
         <p>2. WebAPI를 만들고 간단한 설명서를 통해 나중에 다른 개발자가 합류했을때도 쉽게 개발환경에 적응 할 수 있게 하기</p>
         <p>3. Zookeeper나 Redis 같이 익숙하지 않은 기술을 익히고 개발 스펙트럼 넓히기</p>
