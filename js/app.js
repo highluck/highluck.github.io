@@ -38,6 +38,11 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
         templateUrl: 'partials/startup-board/project_d.html',
         controller: GenericViewCtrl
     });
+    
+    $routeProvider.when('/project_e', {
+        templateUrl: 'partials/startup-board/project_e.html',
+        controller: GenericViewCtrl
+    });
       
     $routeProvider.when('/contact', {
         templateUrl: 'partials/contact.html', 

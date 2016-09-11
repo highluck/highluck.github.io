@@ -1,13 +1,60 @@
 
 <div class="contents">
 <div class="page-header">
-    <h2 style=" padding-left: 5%;">스타트업 도전 3</h2>
-    <h3 style=" padding-left: 5%;"> : 우린 변화가 필요하다.</h3>
-     <p align = "right" style=" padding-right: 6%;">- 2016-08-10 -</p>
+    <h2 style=" padding-left: 5%;">4. Service 개발(1)</h2>
+    <h3 style=" padding-left: 5%;"> : AuthAccountWebApi Dev</h3>
+     <p align = "right" style=" padding-right: 6%;">- 2016-08-15 -</p>
     <p align = "right" style=" padding-right: 5%;"><span span style="font-style:italic">Write by</span> highluck</p>
 </div>
 
     <div class = "footer footer-font" style="width:90%">
+        <p>&nbsp;전 편에 보여줬던 대로 현재 우리회사 Service는 별기능이 없다. 그래서 새로 생각한대로 모든 기능들을 WebApi로 개발하는 것에서 우선 필수적인 기능인 인증계정 서버를 개발하기 시작했다. 개발 프레임워크는 Spring Boot!</p>
+        <br>
+        <h3>Dev3. 인증 계정 서버</h3>
+        <p>&nbsp;인증 계정 서버를 내용을 간략히 설명하자면 다음과 같다.</p><br>
+        <h4>1. 로그인 및 회원가입 인증</h4>
+        <p>&nbsp;사용자가 로그인을 하면 서버에서는 패스워드변경한지 90일이 지났는지 체크를 하고 암호화된 토큰키를 생성한 후 레디스에 저장 후 클라이언트에게 메시지를 보낸다. 여기서 토큰을 RDB에 저장하는 것보다 Cache에 저장하는 것이 속도 면에서 유리 할 것이라는 생각에 레디스를 사용하게 되었다. 그리고 많은 서비스에서 그렇게 사용한다는 이야기를 들었다.</p><br>
+        <h5>- 로그인 -</h5>
+        <img src="img/account/login.png" width="400" height="350">
+        <br>
+      
+        <h5>- 회원가입 -</h5>
+        <img src="img/account/set.png" width="400" height="380">
+        <br>
         
+        <p>&nbsp;회원가입은 email을 기본아이디로 하고 회원가입시 바로 토큰키가 포함된 인증메일이 발송된다. 사실 인증메일 만들때 조금 고생했다. 해본적이 없어서 어떻게 해야할까 고민하면서 구글검색을 많이했다. 그래서 ThymeLeaf를 알게 되었다. 사실 jstl처럼 사용하는 라이브러리인데 html형식을 메일로 보내주는 기능이 있었다. 그래서 이ThymeLeaf를 이용해서 메일 전송기능을 완료 했다.</p>
+        <p>&nbsp;이밖에도 패스워드 변경 메일 전송, 권한 인증 등 위의 기능들과 비슷하게 구현했다.</p><br>
+        <h4>2. 비동기 Async</h4>
+        <p>&nbsp;사실 메일 전송같은 기능들은 그냥 동기화를 개발하면 문제가 많다. 왜냐하면 메일전송은 긴시간 이 소요된다. 그렇기 때문에 많은 Request 요청시 그 요청에 대기시간이 길어지고, 스레드를 할당 받지 못하는 경우가 많이 생길 수 있다. 그렇기 때문에 멀티스레드를 이용한 비동기로 구현을 해야한다. 사실 예전에는 스프링에서 제공하는 TaskExcutor를 이용해서 스레드풀을 만들어서 메일 기능 마다 사용했지만 요번에는 조금 다르게 그Api 전체를 비동기로 했다.</p>
+        <p>먼저 스프링에서 제공하는 TaskExcutor를 config에 스레드 풀을 생성한다. </p>
+            <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+@Override
+public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+	// TODO Auto-generated method stub
+
+    ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+    taskExecutor.setCorePoolSize(10);
+    taskExecutor.setMaxPoolSize(20);
+    taskExecutor.setQueueCapacity(50);
+    configurer.setTaskExecutor(taskExecutor);		
+}
+    </code></pre>
+    </div>  <br>
+        <p>스프링 3.2 에서 제공하는 Callable을 리턴 타입으로 지정 Callable은 인터페이스를 기본으로 하기 때문에 람다식 으로 구현 하였다.</p>
+            <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+@Autowired
+AccountService accountService;
+
+@RequestMapping(value ="/", method = RequestMethod.Post)
+public @ResponseBody Callable Account set(@ModelAttribute Account account){
+			
+	return () -> {	
+		return accountService.findByEmail(account.getEmail());
+	};
+}
+    </code></pre>
+    </div> <br>
+        <p> 일반사용자를 대상으로하는 서비스를 개발 할 때는 항상 많은 생각을 해야한다. 왜나면 보안 문제가 있을 수 있고 사용자 편의성을 고려한 Performance 등 여러가지 많은 이슈가 있기 때문이다. 근데 확실히 나는 Service단 개발하는게 재밌다. 뭔가 조금 더 성취감이 있는 것 같다.</p>
+        <p> 입사 후 한 두달간은 미친듯이 개발만 한 것 같다. 근데 그래도 더하고싶다. 팀장님과 팀원들과 의견을 나누는 것도 즐겁다. 그래서 더 재밌게 개발을 할 수 있던 것도 있다.</p>
     </div>
 </div>
