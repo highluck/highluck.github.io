@@ -3,7 +3,7 @@
 /* Controllers */
 
 
-function GenericViewCtrl($scope) {
+function GenericViewCtrl($scope, ngMaterial) {
 }
 GenericViewCtrl.$inject = ['$scope'];
 
