@@ -11,13 +11,24 @@
 
 <md-content class="md-padding content-board" layout-xs="column" layout="row">
     
-     <a href="#/trouble_a" style="color:#444">
+     
      <div flex-xs="" flex-gt-xs="50" layout="column">
       <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch="">     <md-card-title>
           <md-card-title-text style ="padding-left : 3%;">
-            <span class="md-headline">1.&nbsp;하 ..이만큼의 데이터는 힘들어요ㅜㅜ</span>
-            <span class="date">: 대용량 사용자로그</span>
+              <a href="#/trouble_a" style="color:#444">
+                <span class="md-headline">1.&nbsp;하 ..이만큼의 데이터는 힘들어요ㅜㅜ</span>
+                <span class="date">: 대용량 사용자로그</span>
+              </a>
+               <div class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>C#</code> 
+                 </md-chips>
+                </md-content>
+                </div>
+              
           </md-card-title-text>
+          
           <md-card-content style=" padding-right: 3%;">
               <p class = "date" align = "right" style=" padding-right: 6%;">
                     2016-04-25 
@@ -29,7 +40,7 @@
         </md-card-title>
       </md-card>
     </div>
-    </a>
+    
     
     <div align=center style="font-size:18px;">
         <td style="margin-left=20px">
