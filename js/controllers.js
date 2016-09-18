@@ -4,6 +4,11 @@
 
 
 function GenericViewCtrl($scope, ngMaterial) {
+    
+    sum = function(a , b){
+        console.log(a+b);
+    }
+    
 }
 GenericViewCtrl.$inject = ['$scope'];
 
