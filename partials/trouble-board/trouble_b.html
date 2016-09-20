@@ -1,0 +1,50 @@
+
+<div class="contents">
+<div class="page-header">
+    <h2 style=" padding-left: 5%;">2.&nbsp;미안해 Json! 너를 잘안다고 생각했어</h2>
+    <h3 style=" padding-left: 5%;"> : Api Gate</h3>
+     <p align = "right" style=" padding-right: 6%;">- 2016-04-13 -</p>
+    <p align = "right" style=" padding-right: 5%;"><span span style="font-style:italic">Write by</span> highluck</p>
+</div>
+
+<div class = "footer footer-font" style="width:90%">
+    <p>&nbsp;내가 개발하고 있는 게임 관리툴은 다음과 같은 구조로 되어있다.<p><br>
+      <h5>(어플리케이션 구조)</h5>
+    <img src="img/game/gamemo.png" width="500" height="480"><br><br>
+    <p>&nbsp;저 구조 중 BusinessLogic아래 있는 WebService는 사내의 다른 WebApi 서비스를 호출해서 사용한다. 이러한 이야기를 하는 이유는 오늘의 이야기가 다른 WebService를 호출하는 과정에서 있었던 일을 다루기 때문이다.</p><br>
+    <h3>- 스케줄링서비스의 등장 -</h3>
+    <p>&nbsp;어느날 팀원 형이 스케줄서비스를 개발하기 시작했다. 처음에는 나와 상관없는 서비스인줄 알았는데 그 서비스를 주요 내가 개발하는 게임관리툴에서 컨트롤 한다는 이야기가 들려왔고 나도 개발에 동참해야 했다. 스케줄링서비스 개발은 생각보다 어렵지 않았다. 왜냐면 Quart 이녀석이 다해주기 때문이다.</p><br>
+    <h4>Quart를 간단히 설명하자면 수행할 작업인 Job을 등록하고 Trigger로 스케줄을 정의해 사용하는 스케줄링 오픈소스이다.</h4><br>
+    <p>&nbsp;문제는 스케줄링서비스를 개발하는 것이 아니라 그것을 게임관리툴에서 WebApi로 호출 하는 것이었다.</p>
+    <br>
+    <h3>- 뭐가 문제인지 모르겠다 -</h3>
+    <p>&nbsp;게임관리툴에서 스케줄링서비스에 트리거를 등록하려고 한다면, 먼저 다음과 같이 클라이언트에서 서버를 거쳐 스케줄링서비스를 호출한다.</p><br>
+    <img src="img/game/schedule.png" width="500" height="400"><br><br>
+    <p>RestApi post에 Body내용은 Json으로 호출 한다. 그러면 Json으로 응답이 온다. 그런데 여기서 서버를 통과하는 과정에서 문제가 있었다. 서버까지는 잘갔는데, 스케줄 서비스에 접근을 하면 에러메시지가 날라오는 것이다. 그런데 중단점을 찍고 아무리 디버깅을 해 봐도 무슨 문제인지 모르겠다.</p>
+    <br>
+    <h4>"왜 지?? 저게 왜 안되는거지??" </h4>
+    <br>
+    <p> 그래서 그형과 함께 담배만 계속 담배만 폈다. 결국 집으로 가서 잠을 자는데 도저히 잠이 안왔다. 그래서 원격으로 회사컴퓨터에 접속했다. 그리고 다시 한번 디버깅을 해봤는데....</p>
+    <br>
+    <h4>"찾았다... 근데 이게뭐여..."</h4>
+    <br>
+    <h3>- 미안해 Json! 너를 잘안다고 생각했어 -</h3>
+    <p>이제 부터 숨은 그림 찾기를 시작하겠다. </p><br>
+    <h5>1번 json</h5>
+    <img src="img/game/json_ok.png" width="300" height="600"><br>
+    <h5>2번 json</h5>
+    <img src="img/game/json_err.png" width="300" height="600"><br><br>
+    <p>&nbsp;위의 두개의 json이 뭐가 다른지 알겠는가? 눈치 아시는 분들은 아실것 이라고 생각한다. 1번 json의 detail은 JsonArray 형식이고 2번 json의 detail은 String이다. 그렇다 서버를 통해가면서 1번 형식으로 보낸 json이 2번 형식의 json으로 바뀌어 가는 것이었다.</p>
+    <p>&nbsp;그러면 왜 저렇게 되었을까? 우선 나는 클라이언트와 서버가 모델을 공유해서 사용하게 만들었다. trigger를 등록하는 두개의 모델이 다음과 같다고 해보자</p>
+          <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+class Trigger {
+	public String triggerId{get; set;}
+    public String 이러쿵{get; set;}
+    public String 등등{get; set;}
+    public dictionary&#60;String, Object&#62; detail{get; set;}
+}
+    </code></pre>
+    </div>  <br>
+    <p>dictionary는 Map과 비슷한 C#콜렉션이다. 클라이언트에서 </p>
+</div>
+</div>
