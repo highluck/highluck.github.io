@@ -34,8 +34,8 @@
     <img src="img/game/json_ok.png" width="300" height="600"><br>
     <h5>2번 json</h5>
     <img src="img/game/json_err.png" width="300" height="600"><br><br>
-    <p>&nbsp;위의 두개의 json이 뭐가 다른지 알겠는가? 눈치 아시는 분들은 아실것 이라고 생각한다. 1번 json의 detail은 JsonArray 형식이고 2번 json의 detail은 String이다. 그렇다 서버를 통해가면서 1번 형식으로 보낸 json이 2번 형식의 json으로 바뀌어 가는 것이었다.</p>
-    <p>&nbsp;그러면 왜 저렇게 되었을까? 우선 나는 클라이언트와 서버가 모델을 공유해서 사용하게 만들었다. trigger를 등록하는 두개의 모델이 다음과 같다고 해보자</p>
+    <p>&nbsp;위의 두개의 json이 뭐가 다른지 알겠는가? 눈썰미 좋으신 분들은 발견했을 것이라고 생각한다. 1번 json의 detail은 JsonArray 형식이고 2번 json의 detail은 String이다. 그렇다 서버를 통해가면서 1번 형식으로 보낸 json이 2번 형식의 json으로 바뀌어 가는 것이었다.</p>
+    <p>&nbsp;그러면 왜 저렇게 되었을까? 우선 게임관리시스템은 클라이언트와 서버가 모델을 공유해서 사용하게 만들었다. 예를 들어 trigger를 등록하는 두개의 모델이 다음과 같다고 해보자</p>
           <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
 class Trigger {
 	public String triggerId{get; set;}
@@ -45,6 +45,10 @@ class Trigger {
 }
     </code></pre>
     </div>  <br>
-    <p>dictionary는 Map과 비슷한 C#콜렉션이다. 클라이언트에서 </p>
+    <p>(dictionary는 Java의 Map같은 C#콜렉션이다.) 클라이언트에서 dictionary&#60;String, Object&#62;에 (String,List)형태로 데이터를 넣어서 서버로 보내고 다시 서버에서 &#60;String, Object&#62;형태로 바인딩 할 때 문제가 나는 것이다. 왜 그것이 문제가 되냐면 클라이언트에서 서버로 보낼때는 JsonArray 겠지만 서버의 Object는 그 JsonArray전체를 String으로 생각하고 받게되는 것 이었다. </p><br>
+     <img src="img/game/bind.png" width="500" height="200"><br><br>
+    <h3>- 문제 해결법 -</h3>
+    <p>&nbsp;문제원인을 찾고 나니 바로 번뜩이는 아이디어가 생각났다. 그것은 바로 서버에서 클라이언트에서 오는 Json데이터를 모두 String에 담아 스케줄링서비스로 보내는 것이다. 그러면 클라이언트에서 보내는 Json형태가 바뀌지 않고 바로 스케줄링서버에 도달할 수 있다.</p>
+    <p>&nbsp;문제를 찾는것은 오래걸렸지만 해결은 생각보다 너무 쉬웠다. 그래도 이러한 경험덕분에 비슷한 문제가 또온다면 쉽게 해결할 수 있겠다는 자신감이 생겼다.</p>
 </div>
 </div>
