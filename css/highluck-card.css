@@ -23,6 +23,12 @@
 .intro{
 font-size: 14px;
 }
+@media (min-width: 1024px){
+    .footer-font{
+        font-size: 17px;
+    }
+}
+
 
 @media (min-width:768px) and (max-width: 1024px){
     .md-headline{
