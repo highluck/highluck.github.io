@@ -5,6 +5,16 @@
     <h3 style=" padding-left: 5%;"> : Api Gate</h3>
      <p align = "right" style=" padding-right: 6%;">- 2016-04-13 -</p>
     <p align = "right" style=" padding-right: 5%;"><span span style="font-style:italic">Write by</span> highluck</p>
+    
+     <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>WebApi</code>
+                      <code>Json</code>
+                      <code>Quartz</code>
+                 </md-chips>
+                </md-content>
+        </div> 
 </div>
 
 <div class = "footer footer-font" style="width:90%">
@@ -13,8 +23,8 @@
     <img src="img/game/gamemo.png" width="600" height="580"><br><br>
     <p>&nbsp;저 구조 중 BusinessLogic아래 있는 WebService는 사내의 다른 WebApi 서비스를 호출해서 사용한다. 이러한 이야기를 하는 이유는 오늘의 이야기가 다른 WebService를 호출하는 과정에서 있었던 일을 다루기 때문이다.</p><br>
     <h3>- 스케줄링서비스의 등장 -</h3>
-    <p>&nbsp;어느날 팀원 형이 스케줄서비스를 개발하기 시작했다. 처음에는 나와 상관없는 서비스인줄 알았는데 그 서비스를 주요 내가 개발하는 게임관리툴에서 컨트롤 한다는 이야기가 들려왔고 나도 개발에 동참해야 했다. 스케줄링서비스 개발은 생각보다 어렵지 않았다. 왜냐면 Quart 이녀석이 다해주기 때문이다.</p><br>
-    <h4>Quart를 간단히 설명하자면 수행할 작업인 Job을 등록하고 Trigger로 스케줄을 정의해 사용하는 스케줄링 오픈소스이다.</h4><br>
+    <p>&nbsp;어느날 팀원 형이 스케줄서비스를 개발하기 시작했다. 처음에는 나와 상관없는 서비스인줄 알았는데 그 서비스를 주요 내가 개발하는 게임관리툴에서 컨트롤 한다는 이야기가 들려왔고 나도 개발에 동참해야 했다. 스케줄링서비스 개발은 생각보다 어렵지 않았다. 왜냐면 Quartz 이녀석이 다해주기 때문이다.</p><br>
+    <h4>Quartz를 간단히 설명하자면 수행할 작업인 Job을 등록하고 Trigger로 스케줄을 정의해 사용하는 스케줄링 오픈소스이다.</h4><br>
     <p>&nbsp;문제는 스케줄링서비스를 개발하는 것이 아니라 그것을 게임관리툴에서 WebApi로 호출 하는 것이었다.</p>
     <br>
     <h3>- 뭐가 문제인지 모르겠다 -</h3>
