@@ -1,7 +1,7 @@
 
 <div class="contents">
 <div class="page-header">
-    <h2 style=" padding-left: 5%;">4. Service 개발(1)</h2>
+    <h2 style=" padding-left: 5%;">4. 서비스 인증 계정 Api</h2>
     <h3 style=" padding-left: 5%;"> : AuthAccountWebApi Dev</h3>
     <p  class = "date" align = "right" style=" padding-right: 6%;">
                     &nbsp;&nbsp;2016-08-25</p>
@@ -59,7 +59,7 @@ public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
 }
     </code></pre>
     </div>  <br>
-        <p>스프링 3.2 에서 제공하는 Callable을 리턴 타입으로 지정 Callable은 인터페이스를 기본으로 하기 때문에 람다식으로 구현하였다.</p>
+        <p>스프링 3.2 에서 제공하는 Callable을 리턴 타입으로 지정 Callable은 요청 받은 스레드를 서블릿 컨테이너에 반환하고 스프링에서 제공하는 TaskExcutor의 새로운 스레드를 생성하여 처리한다. 그 동안 원래 스레드는 새로운 요청을 처리할 수 있게 된다. 그리고 분리된 스레드 안에서 Callable클래스를 호출하여 그 리턴 값과 원래 요청된 응답을 서블릿 컨테이너로 보낸다. Callable은 인터페이스로 내부의 call()메서드로 안에 구현한다. 나는 좀 있어보이기 위해 람다식을 사용하겠다.</p>
             <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
 @Autowired
 AccountService accountService;
