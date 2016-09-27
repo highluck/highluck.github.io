@@ -19,7 +19,7 @@
 .title-img {
 
     height: 10%;
-    width:100%;
+    width:80%;
     padding: 10%;
     color: oldlace;
     
@@ -41,7 +41,7 @@
 
 @media screen and (max-width:768px){
     .title-img{ 
-        width:94.5%;
+        width:93%;
         margin-left: -7%;
         margin-top: -20px;
         color: oldlace;
