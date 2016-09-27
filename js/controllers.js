@@ -3,18 +3,18 @@
 /* Controllers */
 
 
-function GenericViewCtrl($scope, ngMaterial) {
+function GenericViewCtrl() {
     
     
 }
-GenericViewCtrl.$inject = ['$scope'];
 
 
-function ContactViewCtrl($scope, $http) {
+
+function ContactViewCtrl() {
 
     
 }
-ContactViewCtrl.$inject = ['$scope', '$http'];
+
 
 
 
