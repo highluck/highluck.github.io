@@ -35,6 +35,33 @@
         <h4>Mock객체란?</h4>
         <h4>가짜 객체를 만들어서 실제 객체처럼 사용하게 해주는 것이다.</h4>
         <p>즉, 실제로 어떤 객체를 구현해서 테스트를 해야하는 상황일 때, 그것을 구현 하지 않고도 Mock이라는 가짜 객체를 통해 테스트를 할 수 있다는 이야기이다.</p>
-     
+        <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+public class EmployeeServiceImplTest extends TestCase {
+
+	private EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
+
+	private EmployeeDAO mock;
+
+    @Before
+	protected void setUp() throws Exception {
+		mock = createMock(EmployeeDAO.class); //Mock 생성
+		employeeService.setEmployeeDAO(mock);
+	}
+
+    @Test
+	private void mockFindById() {
+		Employee employee = new Employee();
+		employee.setId("BP00001");
+        employee.setName("test");
+        employee.postionCode(00);
+        employee.innerNumber("070");
+        employee.email("test@test.com");
+
+		expect(mock.findById(employee.getId())).andReturn(employee); //검증
+	}
+}
+    </code></pre>
     </div>
+    
+    <p>&nbsp;mock을 이용해서 간단한 테스트 코드를 작성했다. 사실 위의 정도 테스트는 Mock을 사용하지 않고 Assert만 가지고도 할 수 있는 테스트이다. 그런데도 Mock을 사용하는 이유는 테스트하려는 객체가 특정한 상황에 의존적일 수 있기 때문이다.</p>
 </div>
