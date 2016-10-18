@@ -55,6 +55,7 @@ public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
     taskExecutor.setCorePoolSize(10);
     taskExecutor.setMaxPoolSize(20);
     taskExecutor.setQueueCapacity(50);
+    taskExecutor.initialize();
     configurer.setTaskExecutor(taskExecutor);		
 }
     </code></pre>
