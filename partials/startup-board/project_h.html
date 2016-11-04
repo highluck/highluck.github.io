@@ -87,7 +87,7 @@ public class InvestorSerivce implements Customer{
         </code></pre>
         </div>
         <br>
-        <h5>커스터머이라는 하나의 인터페이스를 만들고 각각의 타입에 따른 서비스에 Implement한다.</h5>
+        <h5>커스터머라는 하나의 인터페이스를 만들고 각각의 타입에 따른 서비스에 Implement한다.</h5>
         <br>
     <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
 public class CustomerService {
@@ -105,7 +105,7 @@ public class CustomerService {
      </code></pre>
         </div>
         <br>
-        <h4>하나의 커스텀 서비스에서 타입에 따라 인터페이스에 타입서비스를 주입시켜서 반환한다.</h4>
+        <h5>하나의 커스텀 서비스에서 타입에 따라 인터페이스에 타입서비스를 주입시켜서 반환한다.</h5>
         <p>&nbsp;사실 각각 서비스 별로 바로 반환 해도 되지만 이렇게 한번에 묶어서 사용하면 커스터머정보를 가져올때 각각의 서비스객체를 생성시켜서 가져와야하기 때문에 복잡도가 커진다. 하지만 이렇게 팩토리패턴으로 묶어서 사용하면 Type 파라미터로 내가 필요한 정보를 가져올 수 있다.</p>
     </div>
 </div>
