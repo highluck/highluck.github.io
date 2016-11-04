@@ -11,7 +11,7 @@
        <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
                 <md-content class="md-padding" layout="column">
                   <md-chips>
-                      <code>SpringSecurity</code>
+                      <code>FactoryPattern</code>
                       <code>Spring</code> 
                    
                  </md-chips>
@@ -21,14 +21,14 @@
     <div class = "footer footer-font" style="width:90%">
         <p>&nbsp;나는 아직도 ERP를 개발하고 있다. 개발을 해도 해도 끝이 없다. 지금까지 완료한 목록은 직원관리, 휴가관리 등등 인사관련을 완료 했고, 지금은 채권과 관련된 페이지를 개발하고 있다. 사실 인사쪽은 크게 양이 많지는 않았다. 하지만 채권쪽은 OTL... 분량이 너무 많다 으아ㅋㅋ 입력내용 만해도 한 50~60개가 넘어가고, 결재 단계만 해도 7단계... 그리고 거절 하고 지우는 단계도 4단계 으악...</p><br>
         <p>&nbsp;그리고... 문제는 내가 ERP의 내용을 정확히 모르고 개발을 하다보니 패키지를 나누거나 모델을 설계할 때 "이렇게 해도 되나?" 라는 생각이들고 또, 내 코드에 확신이 안든다는게 너무 큰 문제다. (이래서 도메인지식이 중요하구나..를 느낀다.)</p><br>
-        <p>&nbsp;그래도 ERP 개발을 하면서 구조에 많이 신경을 쓰고 있다. 예를 들면</p>
-        <h4>1. 로직마다 Exception처리를 직접하지 않고 스프링의 리졸버를 이용하여 글로벌 Exception으로 모두 올려서 처리하는 것</h4>
-        <h4>2. 최대한 공유할 수 있는 코드(페이징 처리나 채번, 날짜처리 등등)는 한개의 패키지에 몰아서 재사용성을 늘리는 것</h4>
-        <h4>3. 타입을 나누는 DBTable인데 칼럼이 조금만 다른 것은 디자인패턴인 팩토리패턴을 적용하는등 조금 더 디자인패턴을 적용하려는 노력을 하는것</h4><br>
+        <p>&nbsp;그래도 ERP 개발을 하면서 구조에 많이 신경을 쓰고 있다. 예를 들면</p><br>
+        <h5>1. 로직마다 Exception처리를 직접하지 않고 스프링의 리졸버를 이용하여 글로벌 Exception으로 모두 올려서 처리하는 것</h5>
+        <h5>2. 최대한 공유할 수 있는 코드(페이징 처리나 채번, 날짜처리 등등)는 한개의 패키지에 몰아서 재사용성을 늘리는 것</h5>
+        <h5>3. 타입을 나누는 DBTable인데 칼럼이 조금만 다른 것은 디자인패턴인 팩토리패턴을 적용하는등 조금 더 디자인패턴을 적용하려는 노력을 하는것</h5><br>
         
         <p>1번,2번은 말 그대로 이고 3번은 조금 설명이 필요할 수 있다. 예를 들어 다음과 같은 테이블이 있다고 하자 
         </p>
-         <img src="img/factory/factory.png" width="500" height="350"><br>
+         <img src="img/factory/factory.png" width="300" height="60"><br>
         
         <p>&nbsp;타입별 항목은 다르지만 비슷한 항목이 많고, 모두 고객에 대한 정보이다. 그래서 팩토리패턴을 적용하였다. 다음은 예시코드이다.</p>
         <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
@@ -86,8 +86,9 @@ public class InvestorSerivce implements Customer{
 }
         </code></pre>
         </div>
-        
-        <h4>커스터머이라는 하나의 인터페이스를 만들고 각각의 타입에 따른 서비스에 Implement한다.</h4>
+        <br>
+        <h5>커스터머이라는 하나의 인터페이스를 만들고 각각의 타입에 따른 서비스에 Implement한다.</h5>
+        <br>
     <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
 public class CustomerService {
         
@@ -103,6 +104,7 @@ public class CustomerService {
 }
      </code></pre>
         </div>
+        <br>
         <h4>하나의 커스텀 서비스에서 타입에 따라 인터페이스에 타입서비스를 주입시켜서 반환한다.</h4>
         <p>&nbsp;사실 각각 서비스 별로 바로 반환 해도 되지만 이렇게 한번에 묶어서 사용하면 커스터머정보를 가져올때 각각의 서비스객체를 생성시켜서 가져와야하기 때문에 복잡도가 커진다. 하지만 이렇게 팩토리패턴으로 묶어서 사용하면 Type 파라미터로 내가 필요한 정보를 가져올 수 있다.</p>
     </div>
