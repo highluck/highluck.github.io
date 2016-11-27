@@ -59,6 +59,11 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
         controller: GenericViewCtrl
     });
       
+    $routeProvider.when('/project_i', {
+        templateUrl: 'partials/startup-board/project_i.html',
+        controller: GenericViewCtrl
+    });
+      
     $routeProvider.when('/troubleshooting', {
         templateUrl: 'partials/troubleShooting.html', 
         controller: GenericViewCtrl
@@ -71,6 +76,11 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
       
     $routeProvider.when('/trouble_b', {
         templateUrl: 'partials/trouble-board/trouble_b.html', 
+        controller: GenericViewCtrl
+    });
+      
+    $routeProvider.when('/trouble_c', {
+        templateUrl: 'partials/trouble-board/trouble_c.html', 
         controller: GenericViewCtrl
     });
       
