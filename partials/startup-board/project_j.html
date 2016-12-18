@@ -26,9 +26,9 @@ public ArrayList&#60;Message&#62; findAllByReciveUserId(MessageValue value){
 		
         if(1 > authRepository.authByToken(value.getId, value.getToken)){ // 인증 되었을때
 		
-        return (ArrayList&#60;Message&#62;) messageRepository.findAllByReciveUserIdAndStatus(value);
+            return (ArrayList&#60;Message&#62;) messageRepository.findAllByReciveUserIdAndStatus(value);
         }
-		else return;
+        else return;
 		
 }
         </code></pre>
