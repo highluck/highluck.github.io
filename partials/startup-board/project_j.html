@@ -1,0 +1,116 @@
+<div class="contents">
+    <div class="page-header">
+    <h2 style=" padding-left: 5%;">9. 클린코드를 위한 노력2 </h2>
+    <h3 style=" padding-left: 5%;"> : Annotation을 이용한 인증 로직 개발</h3>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                   &nbsp;&nbsp;2016-11-30</p>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                 <span span style="font-style:italic;">Write by</span> highluck 
+    </p>
+    
+       <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>Spring</code>
+                      <code>annotation</code> 
+                 </md-chips>
+                </md-content>
+        </div>
+    </div>
+    <div class = "footer footer-font" style="width:90%">
+        <p>&nbsp;드디어 회사의 웹사이트를 새로 개발하게 되었다. 그렇게 개발을 시작하려고 기존 코드를 보고 있는데!! 다음과 같은 점이 발견되었다.</p> 
+        <p>기존의 인증 로직은 매번 Service레이어에서 인증처리 로직을 만들어줬었다. 다음 과 같다.</p><br>
+        <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+        
+@Transactional(readOnly = true)
+public ArrayList&#60;Message&#62; findAllByReciveUserId(MessageValue value){
+		
+if(1 > authRepository.authByToken(value.getId, value.getToken)){ // 인증 되었을때
+		
+        return (ArrayList&#60;Message&#62;) messageRepository.findAllByReciveUserIdAndStatus(value);
+}
+		else return;
+		
+}
+        </code></pre>
+        </div><br>
+        <p>&nbsp;다음과 같이 인증이 필요한 API마다 매번 인증 로직을 써주어야 했다. 물론 긴 코드는 아니지만 저코드를 매번 써주는 것은 불필요 하다는 생각을 하게 되었다. 그래서 한번에 저것을 처리 할 수 있는 방법을 생각했다.</p><br>
+        
+        <h5>1. Filter를 이용한 처리 </h5>
+        <p>&nbsp; 처음 생각한 것은 Filter를 이용한 처리이다. doFilter에서 전처리를 해주는 것이다. 로직은 다음과 같다.</p>
+         <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+        
+
+@Override
+public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+		throws IOException, ServletException {
+	// TODO Auto-generated method stub
+	
+    AuthValue value = new AuthValue();
+    value.setToken(request.getHeader("s-token"));
+    value.setId(request.getHeader("s-Id"));
+	    
+    if(1 > authRepository.authByToken(value)) return false;
+    else
+	chain.doFilter(request, response);
+}
+        </code></pre>
+        </div><br>
+        <p>&nbsp; 다음과 같이 DispacherServlet 접근하기 전에 필터에서 인증처리를 해주는 것이다. 하지만 이렇게 했을때는 이프로젝트안에 포함된 모든 API가 인증을 거쳐야한다. 즉, 인증이 필요한 API만 걸러낼 수가 없다. 그래서 다음을 생각했다.</p><br>
+        
+        <h5>2. Interceptor를 이용한 인증 Annotation </h5>
+        <p>&nbsp;스프링은 Interceptor라는 기능이 있다. Filter와의 차이점은 서블릿 앞에서 처리하느냐 뒤에서 처리하느냐의 차이점이 있다. 즉 Interceptor를 이용해서 컨트롤러에 접근 직전에 처리를 할 수 있다. 처리하는 방법은 여러가지가 있겠지만 나는 내 입맛에따라 골라서 사용할 수 있는 Annotation을 이용했다.</p>
+        <p>&nbsp;코드는 다음과 같다.</p><br>
+        
+        <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface HighAuth {
+
+}
+        </code></pre>
+        </div>
+        <p>&nbsp;먼저 HighAuth라는 인증 어노테이션을 만들었다.</p><br>
+        <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+
+@Override
+public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException {
+	//HandlerMethod handlerMethod = (HandlerMethod) handler;
+	if (handler instanceof HandlerMethod) {
+		HighAuth highAuth = ((HandlerMethod) handler).getMethodAnnotation(HighAuth.class);
+		
+     if(highAuth == null) {
+     	return super.preHandle(request, response, handler);
+     }
+      else {
+         //TODO 추가작업
+ 		AuthValue value = new AuthValue();
+ 		value.setToken(request.getHeader("s-token"));
+ 		value.setId(request.getHeader("s-Id"));
+ 
+ 		if(1 > authRepository.authByToken(value)) return false;
+ 		else return super.preHandle(request, response, handler);		
+     }
+	}
+	else {
+		return super.preHandle(request, response, handler);
+	}
+}
+        </code></pre>
+        </div>
+        <p>그 다음으로는 Interceptor핸들러를 이용해서 HighAuth라는 어노테이션이 있을때 마다 인증로직을 실행 시켜줄수 있도록 했다.</p><br>
+        <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+
+    @HighAuth // 인증 어노테이션
+	@RequestMapping(value ="/recive/users/{reciveUserId}", method = RequestMethod.GET)
+	public ArrayList&#60;Message&#60; findAllByReciveUserId(@ModelAttribute MessageValue value){
+		return messageService.findAllByReciveUserId(value);
+	}
+
+        </code></pre>
+        </div>
+        <p> 다음과 같이 @HighAuth만 작성하면 인증로직을 거쳐 갈 수 있게 되었다. 이제 앞으로 인증이 필요한 API는 @HighAuth만 붙이면 된다.</p><br>
+        <p> 이러한 노력으로 상당히 코드가 간결 해졌다. 개발을 하면서 조금 더 클린코드를 짜려고 노력할 때 실력이 는다는 걸 느낀다. 항상 조금 더 좋은 코드를 짜기위해 노력해야겠다.</p>
+    </div>
+</div>
