@@ -18,7 +18,12 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
         templateUrl: 'partials/startUpPage_2.html', 
         controller: GenericViewCtrl
     });
-      
+    
+    $routeProvider.when('/startup/3/', {
+        templateUrl: 'partials/startUpPage_3.html', 
+        controller: GenericViewCtrl
+    });
+    
     $routeProvider.when('/project_a', {
         templateUrl: 'partials/startup-board/project_a.html', 
         controller: GenericViewCtrl
@@ -75,6 +80,10 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
         controller: GenericViewCtrl
     });
       
+    $routeProvider.when('/project_l', {
+        templateUrl: 'partials/startup-board/project_l.html',
+        controller: GenericViewCtrl
+    });
       
     $routeProvider.when('/troubleshooting', {
         templateUrl: 'partials/troubleShooting.html', 
