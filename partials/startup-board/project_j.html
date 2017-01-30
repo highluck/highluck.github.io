@@ -24,7 +24,7 @@
 @Transactional(readOnly = true)
 public ArrayList&#60;Message&#62; findAllByReciveUserId(MessageValue value){
 		
-        if(1 > authRepository.authByToken(value.getId, value.getToken)){ // 인증 되었을때
+        if(authService.authByToken(value.getId, value.getToken)){ // 인증 되었을때
 		
             return (ArrayList&#60;Message&#62;) messageRepository.findAllByReciveUserIdAndStatus(value);
         }
@@ -47,7 +47,7 @@ public void doFilter(ServletRequest request, ServletResponse response, FilterCha
     value.setToken(request.getHeader("s-token"));
     value.setId(request.getHeader("s-Id"));
 	    
-    if(1 > authRepository.authByToken(value)) return false;
+    if(authService.authByToken(value)) return false;
     else chain.doFilter(request, response);
 }
         </code></pre>
@@ -83,7 +83,7 @@ public boolean preHandle(HttpServletRequest request, HttpServletResponse respons
             value.setToken(request.getHeader("s-token"));
             value.setId(request.getHeader("s-Id"));
 
-            if(1 > authRepository.authByToken(value)) return false;
+            if(authService.authByToken(value)) return false;
             else return super.preHandle(request, response, handler);		
          }
 	}
