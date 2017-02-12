@@ -21,7 +21,6 @@
         <p>&nbsp;드디어 회사의 웹사이트를 새로 개발하게 되었다. 그렇게 개발을 시작하려고 기존 코드를 보고 있는데!! 다음과 같은 점이 발견되었다.</p> 
         <p>기존의 인증 로직은 매번 Service레이어에서 인증처리 로직을 만들어줬었다. 다음 과 같다.</p><br>
         <div class="highlighter-rouge footer-font"><pre class="highlight"><code>       
-@Transactional(readOnly = true)
 public ArrayList&#60;Message&#62; findAllByReciveUserId(MessageValue value){
 		
         if(authService.authByToken(value.getId, value.getToken)){ // 인증 되었을때
