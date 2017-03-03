@@ -51,7 +51,7 @@ public void setPage(int page) {
 </code></pre>
 </div><br>
        <p>이렇게 getter/setter ValueObject에서 Optional로 타입을 지정하고 orElse로 default 값을 정해주면 if문 없이 default 값을 줄 수 있다.</p>
-    </div><br>
+  <br>
     <p>&nbsp;다음과 같이 사용할 수 도 있다.</p><br> 
     <p>아래코드는 페이스북이나 카카오등 OAuth 로그인하는 코드이다. 기존에 아이디가 있으면 바로 로그인을 하는 것이고, 기존에 아이디가 없으면 새로 회원가입을 시키는 코드이다.</p>
     
@@ -127,6 +127,7 @@ public LogResponse oAuthLogin(User value) throws Throwable{
 }
 </code></pre>
 </div><br>
+    
     <p>&nbsp;코드가 상당히 많이 간결해졌다. 사실 생성자 파라미터를 사용한 것도 있긴 하지만 Optional로 인해 상당히 많은 코드를 줄일 수 있었다.</p><br>
     
     <p>&nbsp; 그외에도 ifPresent() 와 같이 null이 아닐때만 내부 반복을 할 수 도 있고, filter와 map등을 같이 사용할 수 있다. 자바8하면 Stream 과 Lambda 인터페이스에서 defaultMethod 구현등이 잘 알려져 있지만 이렇게 Optional도 있다는 것을 많은 개발자들이 알고 같이 사용했으면 좋겠다.</p><br>
