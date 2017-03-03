@@ -1,0 +1,135 @@
+<div class="contents">
+    <div class="page-header">
+    <h2 style=" padding-left: 5%;">13. Optional은 사랑입니다.</h2>
+    <h3 style=" padding-left: 5%;"> : Optional</h3>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                   &nbsp;&nbsp;2017-03-01</p>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                 <span span style="font-style:italic;">Write by</span> highluck 
+    </p>
+       <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>Java8</code>
+                 </md-chips>
+                </md-content>
+        </div>
+    </div>
+    <div class = "footer footer-font" style="width:90%">
+        <p>&nbsp;최근에 스칼라를 공부하면서 Option을 많이 사용했었다. 하지만 Java8에도 Option이 있다는 것을 그동안 간과 했다. Optional에 대한 이야기를 검색해보면 제일 먼저 나오는게 NullPointerExeption이다. 사실 NPE은 두려움의 대상이다. 생각보다 예상치 못한곳에서 많이 뜨게 되고, 의식면서 개발을 하면 코드량이 이상하게 늘어난다..</p>
+        <br>
+        <p>&nbsp;하지만!! Optional과 함께라면 두렵지 않다. 다음은 페이징 처리의 Default값으로 기존에 내가 작성했던 코드이다.</p>
+<div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+@Transactional
+public List&#60;Goods&#60; findAll(GoodsValue value){
+		
+        if(value.getLimit() == 0) value.setLimit(10);
+		if(value.getPage() == 0) value.setPage(1);
+		
+		return investGoodsRepository.findAll(value);
+}
+</code></pre>
+</div><br>
+        <h5>if문 두개가 참 거슬리지 않을수 없다. 하지만 여기서 if문을 다음과 같이해서 없앨 수 있다.</h5><br>
+        <p>하지만 Optional을 사용해서 다음과 같이 if문을 없앨 수 있다.</p>
+        <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+private Optional&#60;Integer&#60; limit = Optional.of(0);
+private Optional&#60;Integer&#60; page = Optional.of(0);
+	
+public Integer getLimit() {
+	return limit.orElse(Message.DEFAULT_LIMIT);
+}
+public void setLimit(int limit) {
+	this.limit = Optional.ofNullable(limit);
+}
+public Integer getPage() {
+	return page.orElse(0);
+}
+public void setPage(int page) {
+	this.page = Optional.ofNullable(page);
+}
+</code></pre>
+</div><br>
+       <p>이렇게 getter/setter ValueObject에서 Optional로 타입을 지정하고 orElse로 default 값을 정해주면 if문 없이 default 값을 줄 수 있다.</p>
+    </div><br>
+    <p>&nbsp;다음과 같이 사용할 수 도 있다.<br> 아래코드는 페이스북이나 카카오등 OAuth 로그인하는 코드이다. 기존에 아이디가 있으면 바로 로그인을 하는 것이고, 기존에 아이디가 없으면 새로 회원가입을 시키는 코드이다.</p>
+    
+            <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+@Transactional
+public LoginResponse oAuthLogin(User value) throws Exception{
+       
+        User user;
+        UserLog log = new UserLog();
+        LoginResponse response = new LoginResponse();
+        
+        value.setTokenKey(library.getEncryption().getEncSHA256(value.getAccount() 
+				+ library.getAuthCodeCreator().SecurityCode()));
+		try{
+			
+			user = userRepository.findById(value.getId());
+			user.setTokenKey(value.getTokenKey());
+			logResponse.setUser(user);
+			
+		}catch(NullPointerException e){
+			
+			if(value.getGender().equals("male")) value.setGender("M");
+			else if(value.getGender().equals("female")) value.setGender("F");
+			
+			value.setCreationTime(Timestamp.valueOf(LocalDateTime.now()));
+			value.setStatusCode("Y");
+			
+			value.setEmailAuth("N");	
+			value.setFacebookUser("Y");
+			value.setPassword("facebook");
+			
+			userRepository.save(value);
+			
+			response.setUser(value);	
+		}
+		
+        response.setTokenKey(value.getTokenKey());
+		response.setResult(logResponse.SUCCESS);
+		
+		log.setAccount(value.getAccount());
+		log.setLoginTimeStamp(Timestamp.valueOf(LocalDateTime.now()));	
+		userLogRepository.save(log);
+		
+		return response;
+}
+</code></pre>
+</div><br>
+    <p>&nbsp; 사실 이코드는 조금 복잡해보인다. 중간에 예외처리도 있고 코드줄도 길다. 하지만 Optional을 사용한다면! 다음과 같이 바꿀 수 있다.</p><br>
+        <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+
+ /*
+  * 이렇게 Repository에서 Optional타입으로 바꾼다.
+  */
+Optional&#60;User&#60; findById(String id);
+
+
+@Transactional
+public LogResponse oAuthLogin(User value) throws Throwable{
+		
+		value.setTokenKey(library.getEncryption().getEncSHA256(value.getAccount() 
+				+ library.getAuthCodeCreator().SecurityCode()));
+                
+		User user = userRepository.findById(value.getId())
+				.orElse(new User(value.getGender(), value.getCreationTime()
+						, value.getStatusCode(), value.getEmailAuth(), "N" , "Y"));
+                        
+		userRepository.save(value);
+		
+		userLogRepository.save(
+            new UserLog(value.getAccount(), Timestamp.valueOf(LocalDateTime.now())));
+		
+		return new LoingResponse(value, value.getTokenKey(), Message.SUCCESS);
+}
+</code></pre>
+</div><br>
+    <p>&nbsp;코드가 상당히 많이 간결해졌다. 사실 생성자 파라미터를 사용한 것도 있긴 하지만 Optional로 인해 상당히 많은 코드를 줄일 수 있었다.</p><br>
+    
+    <p>&nbsp; 그외에도 ifPresent() 와 같이 null이 아닐때만 내부 반복을 할 수 도 있고, filter와 map등을 같이 사용할 수 있다. 자바8하면 Stream 과 Lambda 인터페이스에서 defaultMethod 구현등이 잘 알려져 있지만 이렇게 Optional도 있다는 것을 많은 개발자들이 알고 같이 사용했으면 좋겠다.</p><br>
+    
+    <h4>Optional은 사랑입니다!!!</h4>
+    
+</div>
