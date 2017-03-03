@@ -31,7 +31,7 @@ public List&#60;Goods&#60; findAll(GoodsValue value){
 </code></pre>
 </div><br>
         <h5>if문 두개가 참 거슬리지 않을수 없다. 하지만 여기서 if문을 다음과 같이해서 없앨 수 있다.</h5><br>
-        <p>하지만 Optional을 사용해서 다음과 같이 if문을 없앨 수 있다.</p>
+    
         <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
 private Optional&#60;Integer&#60; limit = Optional.of(0);
 private Optional&#60;Integer&#60; page = Optional.of(0);
@@ -52,7 +52,8 @@ public void setPage(int page) {
 </div><br>
        <p>이렇게 getter/setter ValueObject에서 Optional로 타입을 지정하고 orElse로 default 값을 정해주면 if문 없이 default 값을 줄 수 있다.</p>
     </div><br>
-    <p>&nbsp;다음과 같이 사용할 수 도 있다.<br> 아래코드는 페이스북이나 카카오등 OAuth 로그인하는 코드이다. 기존에 아이디가 있으면 바로 로그인을 하는 것이고, 기존에 아이디가 없으면 새로 회원가입을 시키는 코드이다.</p>
+    <p>&nbsp;다음과 같이 사용할 수 도 있다.</p><br> 
+    <p>아래코드는 페이스북이나 카카오등 OAuth 로그인하는 코드이다. 기존에 아이디가 있으면 바로 로그인을 하는 것이고, 기존에 아이디가 없으면 새로 회원가입을 시키는 코드이다.</p>
     
             <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
 @Transactional
