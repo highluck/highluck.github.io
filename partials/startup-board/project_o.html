@@ -21,7 +21,7 @@
         <p>&nbsp;하지만!! Optional과 함께라면 두렵지 않다. 다음은 페이징 처리의 Default값으로 기존에 내가 작성했던 코드이다.</p>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
 @Transactional
-public List&#60;Goods&#60; findAll(GoodsValue value){
+public List&#60;Goods&#62; findAll(GoodsValue value){
 		
         if(value.getLimit() == 0) value.setLimit(10);
 		if(value.getPage() == 0) value.setPage(1);
@@ -33,8 +33,8 @@ public List&#60;Goods&#60; findAll(GoodsValue value){
         <h5>if문 두개가 참 거슬리지 않을수 없다. 하지만 여기서 if문을 다음과 같이해서 없앨 수 있다.</h5><br>
     
         <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
-private Optional&#60;Integer&#60; limit = Optional.of(0);
-private Optional&#60;Integer&#60; page = Optional.of(0);
+private Optional&#60;Integer&#62; limit = Optional.of(0);
+private Optional&#60;Integer&#62; page = Optional.of(0);
 	
 public Integer getLimit() {
 	return limit.orElse(Message.DEFAULT_LIMIT);
@@ -105,7 +105,7 @@ public LoginResponse oAuthLogin(User value) throws Exception{
  /*
   * 이렇게 Repository에서 Optional타입으로 바꾼다.
   */
-Optional&#60;User&#60; findById(String id);
+Optional&#60;User&#62; findById(String id);
 
 
 @Transactional
@@ -113,12 +113,10 @@ public LogResponse oAuthLogin(User value) throws Throwable{
 		
 		value.setTokenKey(library.getEncryption().getEncSHA256(value.getAccount() 
 				+ library.getAuthCodeCreator().SecurityCode()));
-                
-		User user = userRepository.findById(value.getId())
+                        
+		userRepository.save(userRepository.findById(value.getId())
 				.orElse(new User(value.getGender(), value.getCreationTime()
 						, value.getStatusCode(), value.getEmailAuth(), "N" , "Y"));
-                        
-		userRepository.save(value);
 		
 		userLogRepository.save(
             new UserLog(value.getAccount(), Timestamp.valueOf(LocalDateTime.now())));
