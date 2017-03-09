@@ -18,8 +18,43 @@
     <div class = "footer footer-font" style="width:90%">
         <p>&nbsp;최근에 스칼라를 공부하면서 Option을 많이 사용했었다. 하지만 Java를 할 때 Option이 있다는 것을 그동안 간과 했다. 그래서 Java8의 Optional을 사용해보니 신세계였다!!! 먼저 Optional에 대한 이야기를 검색해보면 제일 먼저 나오는게 NullPointerExeption이다. 사실 NPE은 두려움의 대상이다. 생각보다 예상치 못한곳에서 많이 뜨게 되고, 의식면서 개발을 하면 코드량이 이상하게 늘어난다..</p>
         <br>
-        <p>&nbsp;하지만!! Optional과 함께라면 두렵지 않다.</p> <br>ßßßß
-    <p>아래코드는 페이스북이나 카카오등 OAuth 로그인하는 코드이다. 기존에 아이디가 있으면 바로 로그인을 하는 것이고, 기존에 아이디가 없으면 새로 회원가입을 시키는 코드이다.</p>
+        <p>&nbsp;하지만!! Optional과 함께라면 두렵지 않다.</p> <br>
+        
+        <p>우선 Optional은 다음과 같이 기본 선언을 할 수 있다.</p>
+        
+<div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+void method(String str){
+   Optional&#60;String&#62; o1 = Optional.of(str); // str이 null이면 NPE 발생
+   Optional&#60;String&#62; o2 = Optional.ofNullable(str); // str이 null이면 빈 Optional 객체 반환
+   Optional&#60;String&#62; o3 = Optional.empty(); // 빈 Optional 객체 반환
+}
+</code></pre>
+</div><br>
+    <p>이외에도 Optional에는 여러가지 기능이 있다.</p><br><br>
+        <b4> ifPresent(Consumer&#60;T&#62;)</b4>
+        <b5>null이 아닐때만 실행된다. void 타입의 추상메서드이다.</b5><br><br>
+
+        <b4> Optional&#60;T&#62; filter(Predicate&#60;T&#62;) </b4>
+        <b5>스트림은 여러 데이터를 들고있는 객체다보니 filter로 걸러졌지만, Optional은 내부객체가 단일객체인만큼 해당 조건을 만족하는지만 확인하는 정도로 사용할 수 있다.</b5><br><br>
+
+        <b4> Optional&#60;U&#62; map(Function&#60;T, U&#62;) </b4>
+        <b5>스트림과 같다. </b5><br><br>
+
+        <b4> T get()</b4>
+        <b5>내부 객체를 반환한다. 다만 내부 객체가 null이면 NPE가 발생한다.</b5><br><br>
+
+        <b4> T orElse(T)</b4>
+        <b5>내부 객체를 반환한다. 내부 객체가 null이면 인자로 들어간 기본값을 반환한다.</b5><br><br>
+
+        <b4> T orElseGet(Supplier&#60;T&#62;)</b4>
+        <b5> orElseGet()은 내부 객체가 null일때 기본값을 반환할 객체를 반환한다.</b5><br><br>
+        
+        <b4> T orElseThrow(Supplier&#60;U&#62;)</b4>
+        <b5>내부 객체가 null이면 인자로 전달받은 예외를 발생시킨다.</b5><br><br>
+
+
+
+    <p>&nsub;아래코드는 페이스북이나 카카오등 OAuth 로그인하는 코드이다. 기존에 아이디가 있으면 바로 로그인을 하는 것이고, 기존에 아이디가 없으면 새로 회원가입을 시키는 코드이다.</p>
     
             <div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
 @Transactional
@@ -94,7 +129,7 @@ public LogResponse oAuthLogin(User value) throws Throwable{
     
     <p>&nbsp;코드가 상당히 많이 간결해졌다. 사실 생성자 파라미터를 사용한 것도 있긴 하지만 Optional로 인해 상당히 많은 코드를 줄일 수 있었다.</p><br>
     
-    <p>&nbsp; 그외에도 ifPresent() 와 같이 null이 아닐때만 내부 반복을 할 수 도 있고, filter와 map등을 같이 사용할 수 있다. 자바8하면 Stream 과 Lambda 인터페이스에서 defaultMethod 구현등이 잘 알려져 있지만 이렇게 Optional도 있다는 것을 많은 개발자들이 알고 같이 사용했으면 좋겠다.</p><br>
+    <p>&nbsp; 자바8하면 Stream 과 Lambda 인터페이스에서 defaultMethod 구현등이 잘 알려져 있지만 이렇게 Optional도 있다는 것을 많은 개발자들이 알고 같이 사용했으면 좋겠다.</p><br>
     
     <h4>Optional은 사랑입니다!!!</h4>
     
