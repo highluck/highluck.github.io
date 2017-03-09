@@ -2,10 +2,10 @@
 
 <div class="contents">
 <div class="page-header">
-    <h2 style=" padding-left: 5%;">3.&nbsp;데이터를 잃어버리다.</h2>
-    <h3 style=" padding-left: 5%;"> : 트랜잭션 충돌</h3>
+    <h2 style=" padding-left: 5%;">4.&nbsp;많은 트래픽을 유발하는 API 성능 이슈</h2>
+    <h3 style=" padding-left: 5%;"> : 해결방법은 정산이다!</h3>
     <p  class = "date" align = "right" style=" padding-right: 6%;">
-                   2016-08-23</p>
+                   2017-03-05</p>
     <p  class = "date" align = "right" style=" padding-right: 6%;">
                  <span span style="font-style:italic;">Write by</span> highluck 
     </p>
@@ -13,13 +13,64 @@
      <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
                 <md-content class="md-padding" layout="column">
                   <md-chips>
-                      <code>JPA</code>
-                      <code>DB</code>
+                      <code>SpringBatch</code>
+                      <code>RestAPI</code>
                  </md-chips>
                 </md-content>
         </div> 
 </div>
-    
-<div class = "footer footer-font" style="width:90%">
-    <p></p>
+        <p>&nbsp;우리서비스는 가상계좌로 입금을 하고 그거래 내역으로 예치금을 계산한다. 왜냐하면 하나의 모계좌에 다수의 가상계좌가 묶여있기 때문에 거래내역으로 예치금을 계산을 해야한다. (자세한 내용은 다음 아래를 참고)</p><br>
+        
+<div flex-xs="" flex-gt-xs="50" layout="column">
+      <md-card>   
+          <md-card-title>
+          <md-card-title-text style ="padding-left : 3%;">
+             <a href="#/project_l" style="color:#444">
+                <span class="md-headline">11. 투자 서버 개발</span><br>
+                <span class="date"> : 예치금 투자 내역 계산 모델링 그리고 개발 </span>
+              </a>
+              <div class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>MySQL</code>
+                      <code>Spring</code>
+                 </md-chips>
+                </md-content>
+                </div>
+          </md-card-title-text>
+          <md-card-content style=" padding-right: 3%;">
+              <p class = "date" align = "right" style=" padding-right: 6%;">
+                    2017-01-20 
+              </p>
+              <p class = "date" >
+                 <span span style="font-style:italic;">Write by</span> highluck 
+              </p>
+          </md-card-content>
+        </md-card-title>
+      </md-card>
 </div>
+    
+    <br>
+    <p>&nbsp;거래내역을 가져올 때 우리는 사용자가 예치금을 업데이트한 날짜로 부터 오늘날짜로 가져온다. 하지만 은행API는 거래내역을 7일기간으로만 가져올 수 있다. 그래서 만약 사용자가 예치금을 업데이트한날짜가 오늘기준으로 30일 전이라면 30/7을 해서 총 4번의 API를 호출하게 된다.</p><br>
+    
+    <img src="img/virtual_trouble/virtual.png" width="600" height="300"><br><br>
+    
+    <p>&nbsp;처음에는 크게 걱정을 안했다. 하지만 최근에 엄청 2~3달전에 업데이트한 고객들에게 내역확인이 오래걸린다는 이야기를 조금 듣고 다시 생각해보게되었다. 만약 1년전에 업데이트한 고객에 새로 예치금을 업데이트한다면? </p><br>
+    
+    <h4>헐?! 그 고객은 총 365/7번 즉, 53번의 요청을 보내게된다.</h4><br>
+    
+    <p>&nbsp; 이것은 상당히 문제가 된다고 생각이 되었다. 단 10명의 고객만 그렇게 된다고 해도 엄청난 트래픽이 있을 것이다. 그래서 내가 생각한 것은 일일 정산이다.</p><br><br>
+    
+    <h4>응? 일일정산? 우리는 정산도 안하냐고?</h4><br>
+    
+    <p>&nbsp;그것은 아니다. 그동안 정산서버는 총 가상계좌 거래내역과 실계좌 그리고 투자내역과 상품에 쌓인 금액을 정산하고 있다. 하지만 가상계좌를 보고 사용자 예치금과 비교하는 정산내용은 없었다.</p><br><br>
+    
+    <h4>"근데 그것으로 어떻게 저 트래픽을 방지해?" 냐고 물으신다면!</h4><br>
+    <p>&nbsp;내생각은 이렇다. 하루에 한번 배치를 돌려서 그날 총 가상계좌거래내역과 사용자예치금과 비교하고 예치금을 확인하지않은 사람의 예치금은 업데이트를 해주고 그렇지 않은 사람들의 업데이트 날짜를 오늘로 바꾸는 것이다. 그렇게 한다면 고객은 항상 정산시간에 예치금 업데이트 날짜를 업데이트해서 거래내역을 검색해도 하루사이의 날짜 즉, 한번의 요청으로 해결을 볼 수 있다.</p>
+    <img src="img/virtual_trouble/virtual_batch.png" width="600" height="500"><br>
+    
+    <p>&nbsp;뭔가 기술적이지는 않지만 확실히 불필요한 트래픽낭비는 확실히 막을 수 있었다. 생각보다 돈을 만지는 개발도 재미는 있네! </p>
+        
+</div>
+
+    
