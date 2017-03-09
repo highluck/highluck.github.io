@@ -115,6 +115,11 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
         controller: GenericViewCtrl
     });
       
+    $routeProvider.when('/trouble_d', {
+        templateUrl: 'partials/trouble-board/trouble_d.html', 
+        controller: GenericViewCtrl
+    });
+      
     $routeProvider.when('/imprint', {
         templateUrl: 'partials/imprint.html', 
         controller: GenericViewCtrl
