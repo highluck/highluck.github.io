@@ -1,0 +1,42 @@
+<div class="contents">
+    <div class="page-header">
+    <h2 style=" padding-left: 5%;">14. 반성은 성공의 어머니..</h2>
+    <h3 style=" padding-left: 5%;"> : 분산 트랜잭션, DB</h3>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                   &nbsp;&nbsp;2017-03-23</p>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                 <span span style="font-style:italic;">Write by</span> highluck 
+    </p>
+       <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>DB</code>
+                      <code>Transaction</code>
+                 </md-chips>
+                </md-content>
+        </div>
+    </div>
+    <div class = "footer footer-font" style="width:90%">
+        <p>&nbsp;최근에 분산트랜잭션과 DB인덱스에 대한 질문을 받았다. 어려운 내용은 아니었는데 순간 머리가 띵해왔고 좋은 답변을하지 못했다. (핑계지만) 사실 인덱스는 복합인덱스던 그냥 인덱스던 칼럼이 WHERE 조건에 안붙으면 인덱스를 타지 않는건데 순간 너무 헷갈렸다. Explain도 예전에는 자주 해왔는데 디테일하게 보지 못한것 같다..</p><br>
+        <p>그리고 분산 트랜잭션은 내가 그 동안 너무 어렵게만 생각했던 것 같다. 이후에 검색해보니 Spring에 ChainTransactionManager라는게 있었다.</p>
+        <br>
+        <p>&nbsp;사실 그동안 난 너무 MSA에 빠져가지고 롤백을 강제로 해주는 API를 호출해야 한다고만 생각했다. 예를들면 Insert하는 Transaction Exception이 떨어질때 Delete를 해준다는식 하지만 이방식은 큰문제점이 있다. 트랜잭션이 연달아 Exception이 떨어지면 데이터무결성을 해친다. 그래서 자동으로 분산 트랜잭션을 해주는 라이브러리를 찾았다. 그리고 스프링에서 ChainTransactionManager가 트랜잭션을 묶어준다는 것을 알았다.</p><br>
+        
+        <p>&nbsp;사용법은 다음과 같다.</p><br>
+        
+<div class="highlighter-rouge footer-font"><pre class="highlight"><code> 
+@Bean(name = "chainedTransactionManager")
+	public ChainedTransactionManager chainTransactionManager(
+			@Qualifier("fundTransactionManager") PlatformTransactionManager fundTransactionManager,
+			@Qualifier("smsTransactionManager") PlatformTransactionManager smsTransactionManager
+			) {
+		return new ChainedTransactionManager(fundTransactionManager, smsTransactionManager);
+	}
+</code></pre>
+</div><br>
+    <p5>다음과 같이 Bean객체로 만들어주고 Transactional로 묶어줄때 Transactional("chainedTransactionManager")만 해주면 된다. 생각보다 간단하다.. 그동안 강제로 api를 따로만들어 호출한 내가 바보같이 느껴질정도 ㅜㅜ</p5><br><br>
+    <p>&nbsp;그래서 오늘 회사에 로직을 이렇게 수정하다가 왔다. 이제라도 알아서 다행이라고 생각해야하나 허허....</p>
+    <p>&nbsp;아무리 MSA라도 트랜잭션에 민감한 것들은 하나의 서버에 묶어 ChainTransactionManager를 쓰는게 좋은 방법같다.</p>
+    
+</div>
+</div>
