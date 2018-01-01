@@ -1,0 +1,116 @@
+<div class="contents">
+    <div class="page-header">
+    <h2 style=" padding-left: 5%;">15. 멀티 DB 관리하기</h2>
+    <h3 style=" padding-left: 5%;"> : 멀티 DB, AOP</h3>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                   &nbsp;&nbsp;2017-04-23</p>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                 <span span style="font-style:italic;">Write by</span> highluck
+    </p>
+       <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>DB</code>
+                      <code>Transaction</code>
+                 </md-chips>
+                </md-content>
+        </div>
+    </div>
+    <div class = "footer footer-font" style="width:90%">
+        <p>&nbsp;하나의 웹서버에 여러개의 DB를 붙여 사용해야 할일이 많았던 것 같다.</p>
+        <br>
+        <p>&nbsp;전에 멀티 트랜잭션 이야기를 했었는데...사실 제일 깔끔한것은 JTA를 사용한 것 같다.</p>
+        <p>&nbsp;이번에는 멀티 트랜잭션보다는 여러개의 DB Datasource를 관리 하는 것을 이야기 해볼까 한다. 많은 분들이 Datasource를 여러개 띄워두고 여러 DB에 접근할 것 이라고 생각 된다. 사실 이게 제일 편하긴한데
+         트랜잭션을 매번 명시해주어야 한다는 단점이 있다. 그래서 트랜잭션을 명시해주지 않다고 자동으로 Datasource를 관리 해주는 코드를 제시해보려고 한다.</p><br>
+
+<h3> 1.routingDataSource를 사용해라!</h3><br>
+<div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+  @Primary
+  @Bean(name = "mainDataSource", destroyMethod = "close")
+  public DataSource mainDataSource() {
+      BasicDataSource dataSource = new BasicDataSource();
+      dataSource.setDriverClassName(properties.getDriverClassName());
+      dataSource.setUrl(properties.getUrl());
+      dataSource.setUsername(properties.getUsername());
+      dataSource.setPassword(properties.getPassword());
+      return dataSource;
+  }
+
+  @Bean(name = "secureDataSource", destroyMethod = "close")
+  public DataSource secureDataSource() {
+      BasicDataSource dataSource = new BasicDataSource();
+      dataSource.setDriverClassName(secureProperties.getDriverClassName());
+      dataSource.setUrl(secureProperties.getUrl());
+      dataSource.setUsername(secureProperties.getUsername());
+      dataSource.setPassword(secureProperties.getPassword());
+      return dataSource;
+  }
+
+  @Bean
+  public DataSource routingDataSource() {
+      AbstractRoutingDataSource routingDataSource = new AbstractRoutingDataSource() {
+          @Override
+          protected Object determineCurrentLookupKey() {
+              return ContextHolder.getDataSourceType();
+          }
+      };
+      Map Object, Object param = Maps.newHashMap();
+      param.put(DataSourceType.MASTER, mainDataSource());
+      param.put(DataSourceType.SECURE_MASTER, secureDataSource());
+      routingDataSource.setDefaultTargetDataSource(mainDataSource());
+      routingDataSource.setTargetDataSources(param);
+      return routingDataSource;
+  }
+
+</code></pre>
+  <br>
+  <p> 위처럼 각각의 데이터 소스를 담는 routingDatasource를 만든다 routingDatatsource에 각각의 데이터소스를 담아두고 필요할때 현재 사용중인 데이터소스를 바꾸는것이다. 여기서 문제는
+    어떻게 내가원하는 데이터소스로 교체를 해줄까? 라는 것이다. 그담은 스레드 로컬이다
+  </p>
+  <h3>2. 스레드 로컬에 접근해서 현재 데이터소스를 바꾸어주자</h3>
+  <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+  public class ContextHolder {
+  private static final ThreadLocal DataSourceType contextHolder = new ThreadLocal DataSourceType();
+  public static void setDataSourceType(DataSourceType dataSourceType){
+      contextHolder.set(dataSourceType);
+  }
+  public static DataSourceType getDataSourceType(){
+      return contextHolder.get();
+  }
+  public static void clearDataSourceType(){
+      contextHolder.remove();
+  }
+  </code></pre><br>
+  <p><br>
+    다음과 같이 스레드 로컬에 접근할수 있는 클래스를 하나 만든다 ThreadLocal은 한 쓰레드에서 실행되는 코드가 동일한 객체를 사용할 수 있도록 해 주기 때문에 쓰레드와 관련된 코드에서 파라미터를
+    사용하지 않고 객체를 전파하기 위한 용도로 주로 사용된다.<br>
+    그 후에 AOP를 통해 특정 패키지 별로 데이터소스를 변경해주면 된다.
+  </p><br>
+  <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+  @Around("execution(* com.kakao.marado.common.service.secure.*Service.*(..))")
+  public Object secureServiceAspect(ProceedingJoinPoint joinPoint) throws Throwable {
+       final String methodName = joinPoint.getSignature().getName();
+
+       final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+       Method method = methodSignature.getMethod();
+
+       if(method.getDeclaringClass().isInterface()){
+           method = joinPoint.getTarget().getClass().getDeclaredMethod(methodName, method.getParameterTypes());
+       }
+       if(method.getAnnotation(TransactionRequired.class) != null){
+           ContextHolder.setDataSourceType(DataSourceType.SECURE_MASTER);
+       }
+
+       log.info("DataSource ===> " + ContextHolder.getDataSourceType());
+       Object returnValue = joinPoint.proceed();
+       ContextHolder.clearDataSourceType();
+       return returnValue;
+   }
+  </code></pre><br>
+
+  <p>
+    사실 이렇게 까지 해줘야하냐 라를 이야기도 많이 들었다. 처음에는 불편하겠지만 나중에 진짜 편해진다.<br>
+    연결되는 데이터베이스가 두세개면 몰라도 그수가 많아지면 진짜 관리하기가 힘들어진다.<br>
+    MSA로 해서 api만 끌어와도 되지않냐? 라는 이야기도 있지만 사실 통계같이 read 데이터만 끌어올때는 차라리 직접 DB에 붙는게 편할때도 많기 때문이다.
+  </p>
+</div>
