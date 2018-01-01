@@ -8,19 +8,33 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
         templateUrl: 'partials/home.html',
         controller: GenericViewCtrl
     });
+    $routeProvider.when('/data', {
+        templateUrl: 'partials/storagePage.html',
+        controller: GenericViewCtrl
+    });
 
-    $routeProvider.when('/startup', {
+    $routeProvider.when('/dev', {
         templateUrl: 'partials/startUpPage.html',
         controller: GenericViewCtrl
     });
 
-    $routeProvider.when('/startup/2/', {
+    $routeProvider.when('/dev/2/', {
         templateUrl: 'partials/startUpPage_2.html',
         controller: GenericViewCtrl
     });
 
-    $routeProvider.when('/startup/3/', {
+    $routeProvider.when('/dev/3/', {
         templateUrl: 'partials/startUpPage_3.html',
+        controller: GenericViewCtrl
+    });
+
+    $routeProvider.when('/data_a', {
+        templateUrl: 'partials/data-board/project_a.html',
+        controller: GenericViewCtrl
+    });
+
+    $routeProvider.when('/data_b', {
+        templateUrl: 'partials/data-board/project_b.html',
         controller: GenericViewCtrl
     });
 
