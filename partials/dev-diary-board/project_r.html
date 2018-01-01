@@ -25,16 +25,16 @@
 <h3> 1.routingDataSource를 사용해라!</h3><br>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
 for(int i = 0; i <= srchDate.get(Calendar.MONTH); i++) {
-		Calendar startCal = (Calendar) srchDate.clone();
-		startCal.set(Calendar.MONTH, i);
-    startCal.set(Calendar.DATE, 1);
+  Calendar startCal = (Calendar) srchDate.clone();
+  startCal.set(Calendar.MONTH, i);
+  startCal.set(Calendar.DATE, 1);
 
-	  String sdt = CalendarUtil.toString(startCal,"yyyy-MM-dd");
-	  Calendar endCal = (Calendar) startCal.clone();
-	  endCal.set(Calendar.DATE, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
+  String sdt = CalendarUtil.toString(startCal,"yyyy-MM-dd");
+  Calendar endCal = (Calendar) startCal.clone();
+  endCal.set(Calendar.DATE, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
 
-	  String edt = CalendarUtil.toString(endCal,"yyyy-MM-dd");
-	  rankList.add(orderDomain.getTopSaleAmountByPeriod(sdt, edt, limit));
+  String edt = CalendarUtil.toString(endCal,"yyyy-MM-dd");
+  rankList.add(orderDomain.getTopSaleAmountByPeriod(sdt, edt, limit));
 }
 </code></pre>
   <br>
