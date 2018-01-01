@@ -1,11 +1,11 @@
 <div class="contents">
     <div class="page-header">
-    <h2 style=" padding-left: 5%;">11. 투자 서버 개발</h2>
+    <h2 style=" padding-left: 5%;">10. 투자 서버 개발</h2>
     <h3 style=" padding-left: 5%;"> : 예치금 투자 내역 계산 모델링 그리고 개발</h3>
     <p  class = "date" align = "right" style=" padding-right: 6%;">
                    &nbsp;&nbsp;2017-01-20</p>
     <p  class = "date" align = "right" style=" padding-right: 6%;">
-                 <span span style="font-style:italic;">Write by</span> highluck 
+                 <span span style="font-style:italic;">Write by</span> highluck
     </p>
        <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
                 <md-content class="md-padding" layout="column">
@@ -35,23 +35,23 @@
         <h5>1. 투자회원과 투자상품</h5>
         <img src="img/invest/invest_db1.png" width="350" height="250"><br>
         <p>우선 투자 회원과 투자상품 테이블을 만든다 이둘의 관계를 설정해 나갈것이다.</p><br>
-        
+
         <h5>2. 가상계좌 입출금 내역과 투자 내역</h5>
         <img src="img/invest/invest_db2.png" width="550" height="450"><br>
         <p>&nbsp;은행 api를 이용해서 가상계좌 내역을 가져와 db에 쌓는다. 그내역으로 예치금을 계산한다. 가상계좌 거래내역을 검색할 때는 회원의 업데이트 날짜와 현재 날짜를 조건으로 검색해온다. 그래야 중복데이터가 덜 할것이기 때문에 계산내용을 줄일 수 있다. 그리고 투자가 일어날때 투자내역테이블에 쌓아 투자 금액을 계산해야한다. 이러한 이유로 두개의 테이블을 생성했다.</p><br>
-        
+
         <h5>3. 로그 테이블과 이자내역 테이블</h5>
         <img src="img/invest/invest_db3.png" width="550" height="450"><br>
         <p>&nbsp;혹시모르기 때문에 로그테이블을 만들었다. 사이즈가 커지면 따로 로그DB를 만들예정이다. 그리고 투자테이블을 참조해 이자를 계산한 내역을 DB에 쌓는다.</p><br>
-        
+
         <h5>4. 파티셔닝</h5>
         <img src="img/invest/invest_db4.png" width="550" height="450"><br>
         <p>&nbsp;유저아이디로 거래내역같은 테이블을 파티셔닝 한다. 거래내역, 투자내역은 많은 데이터가 쌓이기 때문에 다른 테이블에비해 많은 데이터가 쌓이는 테이블이다. 그렇기 때문에 SELECT INSERT 등 처리에 파티셔닝을 하는게 더 유리하겠다는 생각을 하게 되었다. 이 아이디로 RANGE파티셔닝을 한다. 1~1000, 1001~2000 ... 으로 파티셔닝을 하고, 그 이후에는 DB를 샤딩할 생각으로 모델링을 했다.</p><br>
-        
+
         <h4>여기서 유저 아이디는? 어떻게 가져오는 것인가?</h4>
         <img src="img/invest/userid.png" width="800" height="600"><br>
         <p>&nbsp;사용자가 로그인을 하면 계정서버에서 유저의 정보를 Response 해준다. 그 정보를 투자회원 가입할 때 다시넣는다 그러면 계정서버에서 다시 인증을 거쳐 유저아이디가 투자 DB에 저장이된다.</p><br>
-        
+
         <h4>그러면 가상계좌는 어떻게 가져오는 것인가?</h4>
         <img src="img/invest/fund.png" width="800" height="600"><br>
         <p>&nbsp;사용자가 가상계좌번호를 요청하면 투자서버로 요청하고 사내에 만들어놓은 은행 api Proxy서버로 요청하고 그서버가 은행에 요청해서 가져온다. 간단하다 거래내역도 마찬가지이다.</p><br>
