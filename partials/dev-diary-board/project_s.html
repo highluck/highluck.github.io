@@ -24,8 +24,8 @@
         <br>
 
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
-List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; resultList = Lists.newArrayList();
-List &#60;Future &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62;&#62; rankList =  Lists.newArrayList();
+List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = Lists.newArrayList();
+List&#60;Future&#60;List&#60;Map &#60;String, Object&#62;&#62;&#62;&#62; rankList =  Lists.newArrayList();
 ExecutorService executor = Executors.newCachedThreadPool();
 for(int i = 0; i &#60;= srchDate.get(Calendar.MONTH); i++) {
 	Calendar startCal = (Calendar) srchDate.clone();
@@ -40,7 +40,7 @@ for(int i = 0; i &#60;= srchDate.get(Calendar.MONTH); i++) {
 	rankList.add(executor.submit(orderDomain.getTopSaleAmountByPeriod(sdt, edt, limit)));
 }
 
-List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; resultList = Lists.newArrayList();
+List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = Lists.newArrayList();
 rankList.forEach( r -> {
 	try {
 		resultList.add(r.get());
@@ -61,7 +61,7 @@ rankList.forEach( r -> {
     <br>
     <h4>코드를 바꾸어보자</h4>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
-List &#60;Future &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62;&#62; rankList =  Lists.newArrayList();
+List&#60;Future&#60;List&#60;Map &#60;String, Object&#62;&#62;&#62;&#62; rankList =  Lists.newArrayList();
 ExecutorService executor = Executors.newCachedThreadPool();
 for(int i = 0; i &#60;= srchDate.get(Calendar.MONTH); i++) {
 	Calendar startCal = (Calendar) srchDate.clone();
@@ -79,7 +79,7 @@ for(int i = 0; i &#60;= srchDate.get(Calendar.MONTH); i++) {
 <p>위의 코드를 아래와 같이 바꾸었다.</p>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
 ExecutorService executor = Executors.newCachedThreadPool();
-List &#60;Future &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62;&#62; rankList 
+List&#60;Future&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; rankList 
     = IntStream
         .range(0, srchDate.get(Calendar.MONTH) + 1)
         .mapToObj( i -> {
@@ -101,7 +101,7 @@ List &#60;Future &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62;&#62; rank
     
     <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
 ExecutorService executor = Executors.newCachedThreadPool();
-List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; resultList = IntStream
+List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = IntStream
         .range(0, srchDate.get(Calendar.MONTH) + 1)
         .mapToObj( i -> {
         	Calendar startCal = (Calendar) srchDate.clone();
@@ -114,7 +114,7 @@ List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; resultList = IntStrea
                 CalendarUtil.toString(startCal,"yyyy-MM-dd")
                 , CalendarUtil.toString(endCal,"yyyy-MM-dd")
                 , limit));
-        }) // 여기서 return 타입은 List &#60;Future &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62;&#62; 이다 -- publisher
+        }) // 여기서 return 타입은 List&#60;Future&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; 이다 -- publisher
         .map( f -> {
             try {
                 return f.get();
@@ -122,7 +122,7 @@ List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; resultList = IntStrea
                 e.printStackTrace();
                 return null;
             }
-        }) List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; 타입으로 -- subscriber
+        }) List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; 타입으로 -- subscriber
         .collect(Collectors.toList());
 
 </code></pre><br>
