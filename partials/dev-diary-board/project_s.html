@@ -57,7 +57,7 @@ rankList.forEach( r -> {
     <h4>Functional???</h4>
     <p>&nbsp;우선 펑셔널은 Immutable객체 여야 한다. 이말은 특정 객체의 상태가 변화 하면 안된다는 것이다. 예를 들어 i라는 변수가 있을때 i++ 즉, i값이 계속증가하는 상태가 변화하면 안된다는 것이다. 이것의 이유는 많은 이유가 있다. 그 중 내가 생각하는 이유는 동시성 이슈가 있을때 조금 더 ThreadSafe한 코드를 만들어 낼 수 있다. 객체가 변화하지 않기때문에 여러 Thread가 접근해도 Safe하기 때문이다.</p><br>
     <p>&nbsp;예를 들어 StringBuilder객체에 .append를 하면 StringBuilder안에 있는 값이 변화한다. 여러사람이 StringBuilder에 접근해서 .append를 하면 우리는 원하는 값을 얻지 못할 것이다.</p><br>
-    <p>&nbsp;그리고 명확하다 상태를 변화 시키지 않기 때문에 그 함수를 사용했을때 return 으로 받는 값이 내가 원하는 값일 것이다.상태를 변화시키지 않기 때문에 실수할 확률이 적어진다.</p>
+    <p>&nbsp;그리고 명확하다 상태를 변화 시키지 않기 때문에 그 함수를 사용했을때 return으로 받는 값이 내가 원하는 값일 것이다.  상태를 변화시키지 않기 때문에 실수할 확률이 적어진다.</p>
     <br>
     <h4>코드를 바꾸어보자</h4>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
