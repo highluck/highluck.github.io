@@ -113,7 +113,7 @@ List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = IntStream
                 CalendarUtil.toString(startCal,"yyyy-MM-dd")
                 , CalendarUtil.toString(endCal,"yyyy-MM-dd")
                 , limit));
-        }) // 여기서 return 타입은 List&#60;Future&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; 이다 -- publisher
+        }) //여기서 return 타입은 List&#60;Future&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; 이다 -- publisher
         .map( f -> {
             try {
                 return f.get();
