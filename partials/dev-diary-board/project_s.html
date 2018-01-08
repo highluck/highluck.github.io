@@ -79,11 +79,10 @@ for(int i = 0; i &#60;= srchDate.get(Calendar.MONTH); i++) {
 <p>위의 코드를 아래와 같이 바꾸었다.</p>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
 ExecutorService executor = Executors.newCachedThreadPool();
-List&#60;Future&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; rankList 
-    = IntStream
+List&#60;Future&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; rankList = IntStream
         .range(0, srchDate.get(Calendar.MONTH) + 1)
         .mapToObj( i -> {
-        	Calendar startCal = (Calendar) srchDate.clone();
+            Calendar startCal = (Calendar) srchDate.clone();
             startCal.set(Calendar.MONTH, i);
             startCal.set(Calendar.DATE, 1);
 
@@ -104,7 +103,7 @@ ExecutorService executor = Executors.newCachedThreadPool();
 List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = IntStream
         .range(0, srchDate.get(Calendar.MONTH) + 1)
         .mapToObj( i -> {
-        	Calendar startCal = (Calendar) srchDate.clone();
+            Calendar startCal = (Calendar) srchDate.clone();
             startCal.set(Calendar.MONTH, i);
             startCal.set(Calendar.DATE, 1);
 
