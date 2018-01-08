@@ -73,16 +73,16 @@ for(int i = 0; i &#60;= srchDate.get(Calendar.MONTH); i++) {
   그리고 담은 List를 루프를 돌려 실행이 끝났을때 다시 담는다.
 </p>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
-  List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; resultList = Lists.newArrayList();
-  rankList.forEach( r -> {
-		try {
-			resultList.add(r.get());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-	});
+List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; resultList = Lists.newArrayList();
+rankList.forEach( r -> {
+	try {
+		resultList.add(r.get());
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	} catch (ExecutionException e) {
+		e.printStackTrace();
+	}
+});
 </code></pre><br>
 <p>
   이렇게 .get 을하면 실행이 끝났을때를 대기한다. 그러면 모두 동시에 쿼리를 처리해서 저 List에 담길것이다.
