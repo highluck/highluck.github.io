@@ -17,14 +17,13 @@
         </div>
     </div>
     <div class = "footer footer-font" style="width:90%">
-        <p>&nbsp;월별 상품 판매 랭킹을 계산해야하는데 상품 데이터 그리고 매달 쿼리를 날려야해서 매우 느렸다. 그래서 생각한것이 병렬 처리!! 사실 병렬처리가 매우 어려워보일 수 있지만 생각보다 쉽다.
-          자바Api의 callable 그리고 future를 사용하면 금방 처리 가능!
+        <p>&nbsp;월별 상품 판매 랭킹을 계산해야하는데 상품 데이터의 매달 계산하는 쿼리를 날려야해서 매우 느렸다. 그래서 생각한 것이 병렬 처리!! 사실 병렬처리가 매우 어려워보일 수 있지만 생각보다 쉽다.<br>
+            자바Api의 callable 그리고 future를 사용하면 금방 처리 가능!
         </p>
         <br>
 
-<h3> 1.routingDataSource를 사용해라!</h3><br>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
-for(int i = 0; i <= srchDate.get(Calendar.MONTH); i++) {
+for(int i = 0; i &#60;= srchDate.get(Calendar.MONTH); i++) {
   Calendar startCal = (Calendar) srchDate.clone();
   startCal.set(Calendar.MONTH, i);
   startCal.set(Calendar.DATE, 1);
@@ -42,7 +41,7 @@ for(int i = 0; i <= srchDate.get(Calendar.MONTH); i++) {
     그런데 getTopSaleAmountByPeriod이라는 함수가 속도가 매우느리면 저기서 wait가 걸린다.
     그래서 저것을 비동기 처리하는게 이번 비동기처리의 핵심! 그래서!!</p><br>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
-public Callable List Map String, Object getTopSaleAmountByPeriod(String sdt, String edt, int limit) {
+public Callable &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; getTopSaleAmountByPeriod(String sdt, String edt, int limit) {
     return () -> orderSlaveMapper.getTopSaleAmountByPeriod(
             ParamHelper.getInstance()
                     .put("sdt", sdt)
@@ -54,11 +53,11 @@ public Callable List Map String, Object getTopSaleAmountByPeriod(String sdt, Str
   그리고 아까 로직부분에 저 펑션을 담을 Future 리스트와 스레드 풀을 만들어 주고, Future 리스트에 위의 펑션들을 담는다.
 </p><br>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
-List Future List Map String, Object  rankList = Lists.newArrayList();
+List &#60;Future &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62;&#62; rankList =  Lists.newArrayList();
 ExecutorService executor = Executors.newCachedThreadPool();
-for(int i = 0; i <= srchDate.get(Calendar.MONTH); i++) {
+for(int i = 0; i &#60;= srchDate.get(Calendar.MONTH); i++) {
 	Calendar startCal = (Calendar) srchDate.clone();
-  startCal.set(Calendar.MONTH, i);
+    startCal.set(Calendar.MONTH, i);
 	startCal.set(Calendar.DATE, 1);
 
 	String sdt = CalendarUtil.toString(startCal,"yyyy-MM-dd");
@@ -74,7 +73,7 @@ for(int i = 0; i <= srchDate.get(Calendar.MONTH); i++) {
   그리고 담은 List를 루프를 돌려 실행이 끝났을때 다시 담는다.
 </p>
 <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
-  List List Map String, Object resultList = Lists.newArrayList();
+  List &#60;List &#60;Map &#60;String, Object&#62;&#62;&#62; resultList = Lists.newArrayList();
   rankList.forEach( r -> {
 		try {
 			resultList.add(r.get());
