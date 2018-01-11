@@ -4,7 +4,7 @@
     <h2 style=" padding-left: 5%;">2. 캐싱으로 퍼포먼스업 </h2>
     <h3 style=" padding-left: 5%;"> : 레디스로 캐싱</h3>
     <p  class = "date" align = "right" style=" padding-right: 6%;">
-                   &nbsp;&nbsp;2017-01-20</p>
+                   &nbsp;&nbsp;2017-04-20</p>
     <p  class = "date" align = "right" style=" padding-right: 6%;">
                  <span span style="font-style:italic;">Write by</span> highluck
     </p>
@@ -12,9 +12,7 @@
                 <md-content class="md-padding" layout="column">
                   <md-chips>
                       <code>Redis</code>
-                      <code>MySQL</code>
                       <code>Batch</code>
-                      <code>Scrapping</code>
                  </md-chips>
                 </md-content>
         </div>
@@ -26,12 +24,11 @@
           그래서 우리는 주기적으로 배치에서 캐싱을 한다. 레디스는 InMemory엔진이기 때문에 속도가 빠르다 Rom과 Ram의 속도 차이라고 생각하면 됨
         </p>
         <img src="img/catching.png" width="600" height="350"><br>
-        <p> 주로 배치에서 주기적으로 캐싱을하고 캐싱이 안되었을때는 DB에 접근해서 캐시를 하고 return을 해주는 식으로 캐싱이 안된 데이터를 캐싱 해준다. Hset같은 redis 컬렉션을 안쓰는 이유는
-          expireTime 때문인데 hset은 하나의 키에 n개의 hash키가 저장되기 때문에 exprieTime관리가 안된다. 그래서 캐싱을 할때는 그냥 set을 쓰는게 맞는것 같다.<br>
+        <p> 주로 배치에서 주기적으로 캐싱을하고 캐싱이 안되었을때는 DB에 접근해서 캐시를 하고 return을 해주는 식으로 캐싱이 안된 데이터를 캐싱 해준다. Hset같은 redis 컬렉션을 안쓰는 이유는 expireTime 때문인데 hset은 하나의 키에 n개의 hash키가 저장되기 때문에 exprieTime관리가 안된다. 그래서 캐싱을 할때는 그냥 set을 쓰는게 맞는것 같다.<br>
         </p>
         <br>
-        <h4>저장소 용도로 쓸대는 무조껀 Hset을 권장한다.</h4>
+        <h4>저장소 용도로 쓸대는 무조껀 Collection을 권장한다.</h4>
         <br> 레디스는 인메모리 엔진이기 때문에 하나의 key가 먹는 리소스가 커서 메모리릭을 발생할 수 있다. 그래서 Hset을쓰면 하나의 키에 N개의 데이터를 가질 수 있기때문에
-        저장소용도를 쓸때는 무조껀 Hset이나 레디스 컬렉션을 사용하길 바란다.</br>
+        저장소용도를 쓸때는 무조껀 Hset이나 레디스 컬렉션을 사용하길 바란다.<br>
     </div>
 </div>
