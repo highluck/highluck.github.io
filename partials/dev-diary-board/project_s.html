@@ -52,7 +52,7 @@ rankList.forEach( r -> {
 });
 </code></pre><br>
 <p>
-  다음과 같이 코드를 짰었다. 하지만 위의 코드를 보면 상당히 복잡하다. 저것을 펑셔널하게 바꾸기 위해서는 우선 FP를 조금 알아야한다. 
+  다음과 같이 코드를 짰었다. 하지만 위의 코드를 보면 상당히 복잡하다. 저것을 펑셔널하게 바꾸기 위해서는 우선 FP를 조금 알아야한다.
 </p><br>
     <h4>Functional???</h4>
     <p>&nbsp;우선 펑셔널은 Immutable객체 여야 한다. 이말은 특정 객체의 상태가 변화 하면 안된다는 것이다. 예를 들어 i라는 변수가 있을때 i++ 즉, i값이 계속증가하는 상태가 변화하면 안된다는 것이다. 이것의 이유는 많은 이유가 있다. 그 중 내가 생각하는 이유는 동시성 이슈가 있을때 조금 더 ThreadSafe한 코드를 만들어 낼 수 있다. 객체가 변화하지 않기때문에 여러 Thread가 접근해도 Safe하기 때문이다.</p><br>
@@ -97,10 +97,9 @@ List&#60;Future&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; rankList
 
 </code></pre><br>
     <p>Calendar는 어쩔수없이 Mutable이지만 그외에는 Immutable이고 상태가 변화하는 객체가 없다. 나머지 코드도 변화 시켜보겠다.</p>
-    
+
     <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
-ExecutorService executor = Executors.newCachedThreadPool();
-List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = IntStream
+List&#60;CompletableFuture&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; message = IntStream
         .range(0, srchDate.get(Calendar.MONTH) + 1)
         .mapToObj( i -> {
             Calendar startCal = (Calendar) srchDate.clone();
@@ -109,11 +108,13 @@ List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = IntStream
 
             Calendar endCal = (Calendar) startCal.clone();
             endCal.set(Calendar.DATE, endCal.getActualMaximum(Calendar.DAY_OF_MONTH));
-            return executor.submit(orderDomain.getTopSaleAmountByPeriod(
+            return CompletableFuture.supplyAsync(() -> orderDomain.getTopSaleAmountByPeriod(
                 CalendarUtil.toString(startCal,"yyyy-MM-dd")
                 , CalendarUtil.toString(endCal,"yyyy-MM-dd")
                 , limit));
-        }) //여기서 return 타입은 List&#60;Future&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62;&#62; 이다 -- publisher
+        }).collect(Collectors.toList()); // publisher
+
+List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = message.stream()
         .map( f -> {
             try {
                 return f.get();
@@ -127,5 +128,5 @@ List&#60;List&#60;Map&#60;String, Object&#62;&#62;&#62; resultList = IntStream
 </code></pre><br>
     <p> 이제 pub sub 패턴이 명확이 보일 것이다. 조금 더 펑셔널하게 짜기위해 고민하다보면 조금 더 재밌게 코딩을 할 수 있게 되는 것 같다.
     </p>
-    
+
 </div>
