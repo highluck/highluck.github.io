@@ -37,12 +37,12 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
         templateUrl: 'partials/data-board/project_b.html',
         controller: GenericViewCtrl
     });
-    
+
     $routeProvider.when('/project_s', {
         templateUrl: 'partials/dev-diary-board/project_s.html',
         controller: GenericViewCtrl
     });
-    
+
     $routeProvider.when('/project_r', {
         templateUrl: 'partials/dev-diary-board/project_r.html',
         controller: GenericViewCtrl
@@ -131,6 +131,11 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
 
     $routeProvider.when('/project_n', {
         templateUrl: 'partials/dev-diary-board/project_n.html',
+        controller: GenericViewCtrl
+    });
+
+    $routeProvider.when('/project_t', {
+        templateUrl: 'partials/dev-diary-board/project_t.html',
         controller: GenericViewCtrl
     });
 

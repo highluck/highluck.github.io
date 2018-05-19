@@ -1,0 +1,53 @@
+<div class="contents">
+    <div class="page-header">
+    <h2 style=" padding-left: 5%;">18. RxJava 서버 적용기</h2>
+    <h3 style=" padding-left: 5%;"> : RxJava</h3>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                   &nbsp;&nbsp;2018-05-19</p>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                 <span span style="font-style:italic;">Write by</span> highluck
+    </p>
+       <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>Spring</code>
+                      <code>RxJava</code>
+                      <code>FP</code>
+                 </md-chips>
+                </md-content>
+        </div>
+    </div>
+    <div class = "footer footer-font" style="width:90%">
+
+<p>&nbsp;리액티브 프로그래밍이 요즘 대세인게 맞는것 같다. 스프링에서도 5부터 리액티브 개념이 들어가기 시작했고, 각 랭귀지에는 rx가 붙은 라이브러리 들이 있다.
+  그중 rx자바에 대한 글을 많이 봤었는데 서버로 적용한 내용을 본적이 없었다. (못 찾은것 일수도...) 그래서 rxJava를 서버에 적용한 이야기를 남겨보려고 한다.</p><br>
+    <h4>RxJava</h4>
+    <p>&nbsp;RxJava는 pub/sup 형태의 이벤트기반 비동기처리를 지원해주는 라이브러리다. </p><br>
+    <p>pub/sub 패턴으로 비동기 처리를 하면 동시에 여러가지 일을 처리할 수 있고, 이벤트 기반으로 싱글스레드로 여러가지 일을 처리해준다. 클라이언트에서는 subscibe가 이벤트에 따라 화면의변화를 준다 그러면 서버에서는 어떻게 생각해야할까?
+    </p>
+    <p>내 생각에 서버에서는 subscriber를 response를 받는 웹서버라고 생각하면 편할 것 같다.</p>
+    <br>
+    <br>
+    <h4>RxJava를 컨트롤러에 적용한 코드</h4>
+<div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+@ResponseBody
+@RequestMapping(value = "/orders/list", method = RequestMethod.POST)
+public Flowable&#60;ChatBotResponse&#62; getOrderList(@RequestBody ChatBotRequest request) {
+  return Flowable.fromCallable(() -> {
+    final Flowable&#60;Long&#62; orderCount = Flowable.fromCallable(() -> chatBotDomain.countItemByCSType(talkUserId, csType));
+    final Flowable&#60;List&#60;Order&#62;&#62; orderList = Flowable.fromCallable(() -> chatBotDomain.listItemByCSType(talkUserId, csType, page, pageSize));
+    final Flowable&#60;Boolean&#62; isOrder = Flowable.fromCallable(() -> chatBotDomain.isOrderByTalkUserId(talkUserId));
+
+    return Flowable.zip(orderList, orderCount, isOrder, (List&#60;Order&#62; orders, Long oCount, Boolean is) -> {
+      //로직 로직
+    }
+  }
+}
+</code></pre><br>
+<p>&nbsp;위의 코드를 보면 우선 Flowable을 리턴 타입으로 한 이유는 Callable로 리턴을 해주기 위해서이다. Callable로 리턴을 하면 웹서버의 스레드는 blocking 상태가 안되고, 이벤트가 끝났을때 쉬는 스레드가 캐치해서 response를 해준다.<br>
+여기서 캐치하는 스레드가 subscriber가 된다. 그래서 기존 안드로이드에서 rxjava를 접하셨던 분들이 이상하게 보실수 도 있겠다.<br>
+그리고 또 여기서 각각의 Flowable로 동시에 작업을 하게 하고, zip을 쓰면 그안에 파라미터로 포함된 개별로 도는 작업들이 모두 끝났을때 다음 작업을 진행한다.<br>
+그래서 이렇게 작업을 하면 세개의 flowable 들을 동시에 처리할 수 있다. 물론 이전 글에쓴 CompletableFuture를 쓰는 방법도 있지만 RxJava가 조금더 심플하고 가장큰 차이점은 이벤트 기반 싱글스레드라는것 <br>
+사실 아직도 멀티스레드에 비해 이벤트기반이 가지는 장점을 정확히는 모르겠다. 컨텍스트스위칭이 없어서 리소스를 적게 먹는다? 이것도 정확한지는 모르겠지만, 대표적인 예시인 아파치와 nginx 비교해둔 글을 참고하는게 좋을것 같다.
+</p>
+</div>
