@@ -1,4 +1,44 @@
 
 <div class="contents">
-    
+    <div class="page-header">
+    <h2 style=" padding-left: 5%;">3. 로그를 좀더 쉽게 쉽게 </h2>
+    <h3 style=" padding-left: 5%;"> : kafka 부터 한걸음 씩</h3>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                   &nbsp;&nbsp;2018-03-20</p>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                 <span span style="font-style:italic;">Write by</span> highluck
+    </p>
+       <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>kafka</code>
+                      <code>elasticSearch</code>
+                 </md-chips>
+                </md-content>
+        </div>
+    </div>
+    <div class = "footer footer-font" style="width:90%">
+      <p>&nbsp;최근에 해보고 싶었던것 중 하나가 로그분석기를 만드는 것이 었다.
+        우연히 회사에서 시스템로그를 쉽게 찾고싶다는 니즈가 있었고, 분석시스템 만들기전에 간단히 시스템로그를 쌓을수 있는 로그 조회시스템을 kafka와 es를 사용해 하게되었다.
+      </p>
+      <br><br>
+
+      <h4>구성</h4>
+      <img src="img/kafka.png" width="600" height="350"><br>
+      <p>&nbsp; 우리가 쌓아야할 서버의 대수는 Main서비스서버 24대, 파트너 서비스 서버 2대, 내부 Api 서버 2대, OpenApi 서버 4대
+        , 어드민 1대, 배치 1대 이렇게 총 34대의 서버의 로그를 쌓아야 했다.</p>
+      <p>&nbsp;여기서 es에 바로 로그를 쏘면 es에 한번에 34번의 트래픽을 받아야 하기때문에 부하가 심할것 이다. 그리고 로그의 날짜 순서를 보장할 수 없을 수도 있다.
+      </p>
+      <p>그래서 생각한것이 메시징큐이다. 그중 많은 량의 로그를 담아두기에 가장 적적한 MQ로 카프카를 선정했다.</p><br>
+
+      <h4>Kafka?</h4>
+      <p>&nbsp; 우선 카프카는 MQ인데 기존의 MQ와 다른점이 많다. 기존의 MQ가 데이터를 메모리에 적재한다면 카프카는 파일시스템을 이용한다. 여기서 카프카에 참신기한 부분이 파일시스템을 사용하면서도 참빠르다는점이다.
+        또한 카프카를 사용하면 카프카 안에 메시지 주기를 설정할 수 있기때문에 많은 consumer들이 뽑아가기 쉽다는 장점도 있다.
+      </p>
+      <img src="img/kafka.png" width="600" height="350"><br>
+      <p>
+        &nbsp;이렇게 카프카에 초기 메시지를 큐잉하면 나중에 하둡에 따로 적재하거나 RDB에 적재할때도 카프카에서 뽑아가면 되서 추가적으로 파이프라인을 붙이기에 좋다
+      </p>
+
+    </div>
 </div>
