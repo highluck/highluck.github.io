@@ -139,6 +139,11 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
         controller: GenericViewCtrl
     });
 
+    $routeProvider.when('/project_u', {
+        templateUrl: 'partials/dev-diary-board/project_u.html',
+        controller: GenericViewCtrl
+    });
+
     $routeProvider.when('/project_t', {
         templateUrl: 'partials/dev-diary-board/project_t.html',
         controller: GenericViewCtrl
