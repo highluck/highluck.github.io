@@ -30,7 +30,53 @@
       <p>&nbsp;먼저 Es는 3대의 서버로 구성했다. 1대의 마스터 노드와 나머지 두대의 데이터노드로 구성했다. 인덱스 생성이나 나머지 두대의 데이터노드를 관리 하기위해서 하나의 마스터 노드를 두었고,
       이를 받침해주는 두대의 데이터노드를 두었다.&nbsp; 샤드 갯수는 각 서버당 한개로 두었다. 왜냐면 ES는 기본적으로 inmemory 엔진이기 때문에 샤드가 많으면 오버 헤드를 일으킬 수 있고
       , 우리의 데이터 사이즈가 많지 않기 때문에 샤드를 많이 할 필요성을 못느꼈다</p><br>
-      <p>&nbsp;
+      <h4>2.ElasticSearch 쿼리</h4>
+      <p>&nbsp;키워드를 찾는 쿼리에 Term과 Match 방법이 있는데, 둘다 역인덱스에 맞는 키워드를 찾아준다. 하지만 Match는 분석한 결과를 찾아주기 때문에 우리같이 한글로 검색하는 결과는
+        Match를 쓰는게 맞는것 같다.
+        <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+"query" {
+  "bool": {
+    "must" : {
+      "match": {
+          "title": {
+            "query":
+            "itemName":@아이템
+            ,"boost": 1.2 //가중치
+          }
+        }
+      }....
+
+    }
+  }
+}
+        </code></pre></div><br>
+        그리고 여기에 페이징과 sort를 추가하면
       </p>
+      <div class="highlighter-rouge footer-font"><pre class="highlight"><code>
+"from" : @from,
+"size" : @size,
+"sort" : {
+  "sale_status" : {
+    "order" : asc, ....
+  }
+}
+"query" {
+  "bool": {
+    "must" : {
+      "match": {
+          "title": {
+            "query":
+            "itemName":@아이템
+            ,"boost": 1.2 //가중치
+          }
+        }
+      }....
+
+    }
+  }
+}
+      </code></pre></div><br>
+      다음과 같은 쿼리가 된다.<br>
+      여기에 like 같은 조건을 추가 하고싶으면 wildcard를 추가하거나, or 조건같은것은 should, 그리고 컬럼별 가중치를 별도로 줄수도 있을것 같다.
     </div>
 </div>
