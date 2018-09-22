@@ -1,0 +1,36 @@
+<div class="contents">
+    <div class="page-header">
+    <h2 style=" padding-left: 5%;">4. ES 검색 엔진 만들기 </h2>
+    <h3 style=" padding-left: 5%;"> : es로 검색 구성 하기</h3>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                   &nbsp;&nbsp;2018-06-20</p>
+    <p  class = "date" align = "right" style=" padding-right: 6%;">
+                 <span span style="font-style:italic;">Write by</span> highluck
+    </p>
+       <div style=" padding-left: 5%;" class="chipsdemoStaticChips" layout="column">
+                <md-content class="md-padding" layout="column">
+                  <md-chips>
+                      <code>elasticSearch</code>
+                 </md-chips>
+                </md-content>
+        </div>
+    </div>
+    <div class = "footer footer-font" style="width:90%">
+      <p>&nbsp;먼저 검색엔진을 만들기 위해 필요한 기술들을 몇가지를 정리해보면<br>
+        1. 검색 스토리지<br>
+        2. 형태소 분석기<br>
+        3. 사용자 사전과 동의어 사전<br>
+        이있다.
+        이중 검색 스토리지는 요즘 가장 많이 쓰이는 루씬 기반의 엘라스틱 서치를 쓰면 될것 같다. 엘라스틱 서치는 인덱스를 생성 할때 알아서 역색인을 만들어주고
+          , 가중치를 주는 것과 RestAPI 형태의 쿼리 검색이 심플하다. 또한 토크나이징 기능 또한 제공한다.<br>
+          형태소 분석기 역시 가장 많이쓰이는 은전한닢을 사용하면 될 것 같았고, 사용자 사전과 동의어 사전 또한 mecab이라는 오픈소스 그리고
+          토크나이저에 어드민에서 직접 입력한 사용자사전과 동의어 사전을 추가적으로 넣어주면 될것 같았다.
+      </p><br>
+      <h4>1.ElasticSearch 구축</h4>
+      <p>&nbsp;먼저 Es는 3대의 서버로 구성했다. 1대의 마스터 노드와 나머지 두대의 데이터노드로 구성했다. 인덱스 생성이나 나머지 두대의 데이터노드를 관리 하기위해서 하나의 마스터 노드를 두었고,
+      이를 받침해주는 두대의 데이터노드를 두었다.&nbsp; 샤드 갯수는 각 서버당 한개로 두었다. 왜냐면 ES는 기본적으로 inmemory 엔진이기 때문에 샤드가 많으면 오버 헤드를 일으킬 수 있고
+      , 우리의 데이터 사이즈가 많지 않기 때문에 샤드를 많이 할 필요성을 못느꼈다</p><br>
+      <p>&nbsp;
+      </p>
+    </div>
+</div>
